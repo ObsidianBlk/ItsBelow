@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Objects/Spider/SpiderLeg/SpiderLeg.gd" type="Script" id=2]
+
+[node name="SpiderLeg" type="Position2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 4, 0.5 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -32 )
+
+[node name="Lower" type="Position2D" parent="."]
+position = Vector2( 256, 0 )
+
+[node name="Sprite" type="Sprite" parent="Lower"]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 4, 0.5 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -32 )
+
+[node name="Mid" type="Position2D" parent="Lower"]
+position = Vector2( 256, 0 )
+
+[node name="Sprite" type="Sprite" parent="Lower/Mid"]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 4, 0.5 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -32 )
+
+[node name="End" type="Position2D" parent="Lower/Mid"]
+position = Vector2( 256, 0 )

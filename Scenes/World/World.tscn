@@ -1,3 +1,76 @@
-[gd_scene format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/Spider/Spider.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
 
 [node name="World" type="Node2D"]
+
+[node name="BasicPlat" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 174, 359 )
+scale = Vector2( 4.59375, 1 )
+texture = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BasicPlat"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicPlat/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="BasicPlat2" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 402, 455 )
+scale = Vector2( 4.59375, 2.375 )
+texture = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BasicPlat2"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicPlat2/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="BasicPlat3" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 567, 359 )
+scale = Vector2( 1.6875, 2.375 )
+texture = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BasicPlat3"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicPlat3/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="BasicPlat4" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 814, 356 )
+scale = Vector2( 6.90625, 1.03125 )
+texture = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BasicPlat4"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicPlat4/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="BasicPlat5" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 1062, 524 )
+scale = Vector2( 6.90625, 1.03125 )
+texture = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BasicPlat5"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicPlat5/StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 192, 176 )
+
+[node name="Spider" parent="." instance=ExtResource( 3 )]
+position = Vector2( 628, 684 )
