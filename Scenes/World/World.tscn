@@ -76,7 +76,7 @@ position = Vector2( 607, 172 )
 [node name="Spider" parent="." instance=ExtResource( 3 )]
 position = Vector2( 634, 936 )
 target_node_path = NodePath("../Player")
-climb_speed = 20.0
+climb_speed = 1.0
 
 [node name="SpiderBounds" parent="." instance=ExtResource( 4 )]
 target_node_path = NodePath("../Spider")

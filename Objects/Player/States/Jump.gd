@@ -4,6 +4,7 @@ extends "res://Objects/Player/PlayerState.gd"
 # Variables
 # ------------------------------------------------------------------------------
 var _initial_jump : bool = true
+var _jump_active : bool = true
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -11,6 +12,7 @@ var _initial_jump : bool = true
 func enter(msg : Dictionary = {}) -> void:
 	if player.is_on_floor():
 		_initial_jump = true
+		_jump_active = Input.is_action_pressed("player_jump")
 	else:
 		_sm.change_to_state("Fall")
 
@@ -24,6 +26,8 @@ func handle_input(event : InputEvent) -> void:
 		player.direction_x[1] = event.get_action_strength("player_right")
 	elif event.is_action_released("player_right"):
 		player.direction_x[1] = 0.0
+	elif event.is_action_released("player_jump"):
+		_jump_active = false
 
 
 func physics_update(delta : float) -> void:
@@ -36,7 +40,8 @@ func physics_update(delta : float) -> void:
 		player._ProcessVelocity_V(-player.jump_strength, true)
 		_initial_jump = false
 	else:
-		player._ProcessVelocity_V(player.gravity * player.fall_multiplier * delta)
+		var mult : float = player.jump_multiplier if _jump_active else player.fall_multiplier
+		player._ProcessVelocity_V(player.gravity * mult * delta)
 		if player.velocity.y > 0.0:
 			_sm.change_to_state("Fall")
 	player.velocity = player.move_and_slide(player.velocity, Vector2.UP, false)

@@ -9,6 +9,7 @@ export var dampening : float = 0.1					setget set_dampening
 export var max_speed : float = 512					setget set_max_speed
 export var max_jump_height : float = 128.0			setget set_max_jump_height
 export var half_jump_dist : float = 150				setget set_half_jump_dist
+export var jump_multiplier : float = 0.8			setget set_jump_multiplier
 export var fall_multiplier : float = 1.25			setget set_fall_multiplier
 
 # ------------------------------------------------------------------------------
@@ -48,6 +49,11 @@ func set_half_jump_dist(d : float) -> void:
 func set_fall_multiplier(m : float) -> void:
 	if m > 0.0:
 		fall_multiplier = m
+
+func set_jump_multiplier(m : float) -> void:
+	if m > 0.0 and m <= 1.0:
+		jump_multiplier = m
+		_CalculateJumpVariables()
 
 # ------------------------------------------------------------------------------
 # Override Methods
