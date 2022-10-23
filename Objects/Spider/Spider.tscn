@@ -5,9 +5,24 @@
 [ext_resource path="res://Objects/Spider/Spider.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 128, 192 )
 
 [node name="Spider" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 2147483648
 script = ExtResource( 3 )
+
+[node name="RightLegSensor" type="RayCast2D" parent="."]
+position = Vector2( 0, -324 )
+enabled = true
+cast_to = Vector2( 3000, 0 )
+collision_mask = 1073741824
+
+[node name="LeftLegSensor" type="RayCast2D" parent="."]
+position = Vector2( 0, -324 )
+enabled = true
+cast_to = Vector2( -3000, 0 )
+collision_mask = 1073741824
 
 [node name="Body" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
@@ -21,6 +36,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -48 )
 shape = SubResource( 1 )
 
 [node name="RightLegs" type="Node2D" parent="."]
@@ -42,7 +58,6 @@ position = Vector2( 49, -64 )
 [node name="LLeg" parent="LeftLegs" instance=ExtResource( 2 )]
 position = Vector2( -53, -157 )
 flipped = true
-verbos = true
 
 [node name="LLeg2" parent="LeftLegs" instance=ExtResource( 2 )]
 position = Vector2( -53, -128 )
@@ -55,9 +70,3 @@ flipped = true
 [node name="LLeg4" parent="LeftLegs" instance=ExtResource( 2 )]
 position = Vector2( -53, -64 )
 flipped = true
-
-[node name="RightTarget" type="Position2D" parent="."]
-position = Vector2( 502, -248 )
-
-[node name="LeftTarget" type="Position2D" parent="."]
-position = Vector2( -502, -248 )

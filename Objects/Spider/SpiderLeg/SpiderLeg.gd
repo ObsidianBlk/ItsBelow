@@ -16,6 +16,8 @@ const MIN_DIST = 100
 # ------------------------------------------------------------------------------
 export var flipped : bool = false
 export var verbos : bool = false
+export var step_time : float = 0.5
+export var step_height : float = 100.0
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -27,9 +29,7 @@ var len_end : float = 0.0
 var goal_pos : Vector2 = Vector2.ZERO
 var int_pos : Vector2 = Vector2.ZERO
 var start_pos: Vector2 = Vector2.ZERO
-var step_height : float = 300
-var step_rate : float = 0.5
-var step_time : float = 0.0
+var step_time_elapsed : float = 0.0
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -47,9 +47,9 @@ func _ready() -> void:
 	len_end = end_joint.position.x
 
 func _process(delta : float) -> void:
-	step_time += delta
+	step_time_elapsed += delta
 	var target_pos : Vector2 = Vector2.ZERO
-	var t = step_time / step_rate
+	var t = step_time_elapsed / step_time
 	if t < 0.5:
 		target_pos = start_pos.linear_interpolate(int_pos, t / 0.5)
 	elif t <= 1.0:
@@ -74,31 +74,32 @@ func _UpdateIK(target_pos : Vector2) -> void:
 	
 	var base_angles : Dictionary = _SSSCalc(dummy_side_length, len_end, dist_to_target)
 	var next_angles : Dictionary = _SSSCalc(len_lower, len_mid, dummy_side_length)
-	if verbos:
-		print(base_angles, " | ", next_angles)
 	
 	global_rotation = (base_rot + base_angles.b + next_angles.b)
 	lower_joint.rotation = next_angles.c
 	mid_joint.rotation = (base_angles.c + next_angles.a)
-	if verbos:
-		print("Global: ", rad2deg(global_rotation), " | Lower: ", rad2deg(lower_joint.rotation), " | Mid: ", rad2deg(mid_joint.rotation))
 
 
 func _SSSCalc(side_a : float, side_b : float, side_c : float) -> Dictionary:
 	var res : Dictionary = {"a":0, "b":0, "c":0}
 	if side_c < side_a + side_b:
-		var sng : float = -1.0 if flipped else 1.0
-		#var sng : float = 1.0
-		res.a = sng * _LawOfCOS(side_b, side_c, side_a)
-		res.b = sng * _LawOfCOS(side_c, side_a, side_b) + PI
-		res.c = sng * (PI - res.a - res.b)
+		var _pi : float = 0 if flipped else PI
+		res.a = _LawOfCOS(side_b, side_c, side_a)
+		res.b = _LawOfCOS(side_c, side_a, side_b) + _pi
+		res.c = _pi - res.a - res.b
+		if flipped:
+			res.a = -res.a
+			res.b = -res.b
+			res.c = -res.c
 	return res
 
 func _LawOfCOS(a : float, b : float, c : float) -> float:
 	var ab2 : float = a * b * 2.0
-	if ab2 == 0.0:
-		return 0.0
-	return acos((a * a + b * b - c * c)/ab2)
+	if ab2 != 0.0:
+		var val : float = acos((a * a + b * b - c * c)/ab2)
+		if not is_nan(val):
+			return val
+	return 0.0
 
 # ------------------------------------------------------------------------------
 # Public Methods
@@ -112,8 +113,9 @@ func step_to(pos : Vector2) -> void:
 	if end_pos.y < highest:
 		highest = end_pos.y
 	
+	var mid_body : float = (global_position.x - end_pos.x) * 0.5
 	var mid = (pos.x + end_pos.x) * 0.5
 	start_pos = end_pos
-	int_pos = Vector2(mid, highest - step_height)
-	step_time = 0.0
+	int_pos = Vector2(mid + mid_body, highest - step_height)
+	step_time_elapsed = 0.0
 
