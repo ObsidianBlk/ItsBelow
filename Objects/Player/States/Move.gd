@@ -30,14 +30,11 @@ func physics_update(delta : float) -> void:
 			player._ProcessVelocity_H(direction * player.accel * delta)
 		else:
 			player._ProcessVelocity_H()
-			#if abs(player.velocity.x) < 0.5:
-			#	_sm.change_to_state("Idle")
+			if abs(player.velocity.x) < 0.1:
+				_sm.change_to_state("Idle")
 		player.velocity = player.move_and_slide_with_snap(
-			player.velocity, Vector2.DOWN, Vector2.UP, false, 2, deg2rad(55), false
+			player.velocity, Vector2.DOWN, Vector2.UP, false, 1, deg2rad(55), false
 		)
-		if abs(player.velocity.x) < 8.0:
-			player.velocity.x = 0.0
-			_sm.change_to_state("Idle")
 	else:
 		_sm.change_to_state("Fall")
 

@@ -11,6 +11,8 @@
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 607, 172 )
+max_speed = 312.0
+max_jump_height = 132.0
 
 [node name="Spider" parent="." instance=ExtResource( 3 )]
 position = Vector2( 990, 1431 )

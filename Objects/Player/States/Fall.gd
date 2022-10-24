@@ -4,6 +4,7 @@ extends "res://Objects/Player/PlayerState.gd"
 # Variables
 # ------------------------------------------------------------------------------
 var _coyote_time : float = 0.0
+var _preland_time : float = 0.0
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -22,14 +23,21 @@ func handle_input(event : InputEvent) -> void:
 		player.direction_x[1] = event.get_action_strength("player_right")
 	elif event.is_action_released("player_right"):
 		player.direction_x[1] = 0.0
-	elif event.is_action_pressed("player_jump") and _coyote_time > 0.0:
-		_sm.change_to_state("Jump", {"coyote_jump":true})
+	elif event.is_action_pressed("player_jump"):
+		if _coyote_time > 0.0:
+			_sm.change_to_state("Jump", {"coyote_jump":true})
+		else:
+			_preland_time = player.preland_grace_time
 
 func physics_update(delta : float) -> void:
 	if _coyote_time > 0.0:
 		_coyote_time -= delta
+	if _preland_time > 0.0:
+		_preland_time -= delta
 	
 	if player.is_on_floor():
+		if _preland_time > 0.0:
+			_sm.change_to_state("Jump")
 		if abs(player.velocity.x) > 0.05:
 			_sm.change_to_state("Move")
 		else:

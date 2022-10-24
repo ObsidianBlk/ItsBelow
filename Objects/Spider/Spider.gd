@@ -6,15 +6,16 @@ extends KinematicBody2D
 # ------------------------------------------------------------------------------
 export var target_node_path : NodePath = ""			setget set_target_node_path
 export var climb_speed : float = 10.0				setget set_climb_speed
-export var horizontal_speed : float = 200.0
-export var horizontal_accel : float = 400.0
+export var horizontal_speed : float = 200.0			setget set_horizontal_speed
+export var horizontal_speed_time : float = 0.1		setget set_horizontal_speed_time
 export var distance_per_step : float = 40.0			setget set_distance_per_step
-export var step_time : float = 0.6
+export var step_time : float = 0.6					setget set_step_time
 
 
 # ------------------------------------------------------------------------------
 # Variables
 # ------------------------------------------------------------------------------
+var _accel : float = 0.0
 var _last_step_time : float = 0.0
 var _cur_l_leg : int = 0
 var _cur_r_leg : int = 0
@@ -58,6 +59,20 @@ func set_distance_per_step(d : float) -> void:
 		distance_per_step = d
 		_CalcStepRate()
 
+func set_horizontal_speed(s : float) -> void:
+	if s > 0.0:
+		horizontal_speed = s
+		_CalcAccel()
+
+func set_horizontal_speed_time(t : float) -> void:
+	if t > 0.0:
+		horizontal_speed_time = t
+		_CalcAccel()
+
+func set_step_time(t : float) -> void:
+	if t > 0.0:
+		step_time = t
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
@@ -66,6 +81,8 @@ func _ready() -> void:
 	left_sensor.force_raycast_update()
 	_CalcStepRate()
 	set_target_node_path(target_node_path)
+
+	_CalcAccel()
 	
 	for leg in left_legs:
 		leg.step_time = step_time
@@ -76,7 +93,9 @@ func _ready() -> void:
 
 func _physics_process(delta : float) -> void:
 	var move_vec : Vector2 = Vector2(0.0, -climb_speed) + _GetHorzSpeed(delta)
-	move_and_collide(move_vec * delta)
+	var res : KinematicCollision2D = move_and_collide(move_vec * delta)
+	if res != null:
+		_speed_x = 0.0
 
 func _process(delta : float) -> void:
 	_last_step_time += delta
@@ -109,7 +128,7 @@ func _GetHorzSpeed(delta : float) -> Vector2:
 		var dist_to_target : float = target.global_position.x - global_position.x
 		var hspeed : float = horizontal_speed * delta
 		if abs(dist_to_target) > hspeed:
-			_speed_x += max(-horizontal_speed, min(sign(dist_to_target) * horizontal_accel * delta, horizontal_speed))
+			_speed_x = max(-horizontal_speed, min(_speed_x + sign(dist_to_target) * _accel * delta, horizontal_speed))
 		else:
 			_speed_x = lerp(_speed_x, 0.0, 0.8)
 		return Vector2(_speed_x, 0.0)
@@ -138,6 +157,9 @@ func _NextStep(offset : Vector2 = Vector2.ZERO) -> void:
 		leg.step_to(pos + offset)
 	else:
 		print("No Leg Collision")
+
+func _CalcAccel() -> void:
+	_accel = (2 * horizontal_speed) / pow(horizontal_speed_time, 2)
 
 func _CalcStepRate() -> void:
 	if climb_speed != 0.0:
