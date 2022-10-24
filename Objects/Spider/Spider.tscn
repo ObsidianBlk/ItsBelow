@@ -5,7 +5,7 @@
 [ext_resource path="res://Objects/Spider/Spider.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 128, 192 )
+extents = Vector2( 256, 384 )
 
 [node name="Spider" type="KinematicBody2D"]
 collision_layer = 0
@@ -13,60 +13,63 @@ collision_mask = 2147483648
 script = ExtResource( 3 )
 
 [node name="RightLegSensor" type="RayCast2D" parent="."]
-position = Vector2( 0, -324 )
+position = Vector2( 0, -482 )
 enabled = true
 cast_to = Vector2( 3000, 0 )
 collision_mask = 1073741824
 
 [node name="LeftLegSensor" type="RayCast2D" parent="."]
-position = Vector2( 0, -324 )
+position = Vector2( 0, -482 )
 enabled = true
 cast_to = Vector2( -3000, 0 )
 collision_mask = 1073741824
 
 [node name="Body" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 4, 4 )
+scale = Vector2( 8, 8 )
 texture = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "q"
+}
 
 [node name="Head" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 0, -180 )
-scale = Vector2( 2, 2 )
+position = Vector2( 0, -344 )
+scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -48 )
+position = Vector2( 0, -80 )
 shape = SubResource( 1 )
 
 [node name="RightLegs" type="Node2D" parent="."]
 
 [node name="RLeg" parent="RightLegs" instance=ExtResource( 2 )]
-position = Vector2( 49, -157 )
+position = Vector2( 119, -308 )
 
 [node name="RLeg2" parent="RightLegs" instance=ExtResource( 2 )]
-position = Vector2( 49, -128 )
+position = Vector2( 119, -279 )
 
 [node name="RLeg3" parent="RightLegs" instance=ExtResource( 2 )]
-position = Vector2( 49, -96 )
+position = Vector2( 119, -247 )
 
 [node name="RLeg4" parent="RightLegs" instance=ExtResource( 2 )]
-position = Vector2( 49, -64 )
+position = Vector2( 119, -215 )
 
 [node name="LeftLegs" type="Node2D" parent="."]
 
 [node name="LLeg" parent="LeftLegs" instance=ExtResource( 2 )]
-position = Vector2( -53, -157 )
+position = Vector2( -113, -306 )
 flipped = true
 
 [node name="LLeg2" parent="LeftLegs" instance=ExtResource( 2 )]
-position = Vector2( -53, -128 )
+position = Vector2( -113, -277 )
 flipped = true
 
 [node name="LLeg3" parent="LeftLegs" instance=ExtResource( 2 )]
-position = Vector2( -53, -96 )
+position = Vector2( -113, -245 )
 flipped = true
 
 [node name="LLeg4" parent="LeftLegs" instance=ExtResource( 2 )]
-position = Vector2( -53, -64 )
+position = Vector2( -113, -213 )
 flipped = true

@@ -28,7 +28,7 @@ func _ready() -> void:
 	for child in get_children():
 		if child is FSMState:
 			child._sm = self
-	change_to_state(_initial_state)
+	call_deferred("change_to_state", _initial_state)
 
 func _unhandled_input(event : InputEvent) -> void:
 	if _active_state != null:

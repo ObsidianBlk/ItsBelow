@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Objects/Rocks/Rock_64_Grass.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/Rocks/Rock_64_Base.tscn" type="PackedScene" id=2]
+
+[node name="Platform_2_1" type="StaticBody2D"]
+
+[node name="Rock_64_Base" parent="." instance=ExtResource( 2 )]
+position = Vector2( 7, -10 )
+rotation = -1.53531
+
+[node name="Rock_64_Grass" parent="." instance=ExtResource( 1 )]
+position = Vector2( 35, -2 )
+frame = 1
+
+[node name="Rock_64_Grass2" parent="." instance=ExtResource( 1 )]
+position = Vector2( -38, -6 )
+frame = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -67, -31, 47, -29, 62, -17, 56, 19, -13, 12, -53, 18 )

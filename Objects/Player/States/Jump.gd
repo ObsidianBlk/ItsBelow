@@ -10,11 +10,11 @@ var _jump_active : bool = true
 # Override Methods
 # ------------------------------------------------------------------------------
 func enter(msg : Dictionary = {}) -> void:
-	if player.is_on_floor():
+	if player.is_on_floor() or "coyote_jump" in msg:
 		_initial_jump = true
 		_jump_active = Input.is_action_pressed("player_jump")
 	else:
-		_sm.change_to_state("Fall")
+		_sm.change_to_state("Fall", {"no_coyote_time":true})
 
 
 func handle_input(event : InputEvent) -> void:
@@ -43,6 +43,6 @@ func physics_update(delta : float) -> void:
 		var mult : float = player.jump_multiplier if _jump_active else player.fall_multiplier
 		player._ProcessVelocity_V(player.gravity * mult * delta)
 		if player.velocity.y > 0.0:
-			_sm.change_to_state("Fall")
+			_sm.change_to_state("Fall", {"no_coyote_time":true})
 	player.velocity = player.move_and_slide(player.velocity, Vector2.UP, false)
 

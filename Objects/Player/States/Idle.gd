@@ -5,6 +5,9 @@ extends "res://Objects/Player/PlayerState.gd"
 # Override Methods
 # ------------------------------------------------------------------------------
 
+func enter(msg : Dictionary = {}) -> void:
+	player.play_animation("Idle")
+
 func handle_input(event : InputEvent) -> void:
 	for ename in ["player_left", "player_right"]:
 		if event.is_action_pressed(ename):

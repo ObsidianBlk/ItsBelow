@@ -8,30 +8,30 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 4, 0.5 )
+scale = Vector2( 6, 0.5 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -32 )
 
 [node name="Lower" type="Position2D" parent="."]
-position = Vector2( 256, 0 )
+position = Vector2( 384, 0 )
 
 [node name="Sprite" type="Sprite" parent="Lower"]
 modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 4, 0.5 )
+scale = Vector2( 6, 0.5 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -32 )
 
 [node name="Mid" type="Position2D" parent="Lower"]
-position = Vector2( 256, 0 )
+position = Vector2( 384, 0 )
 
 [node name="Sprite" type="Sprite" parent="Lower/Mid"]
 modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 4, 0.5 )
+scale = Vector2( 6, 0.5 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -32 )
 
 [node name="End" type="Position2D" parent="Lower/Mid"]
-position = Vector2( 256, 0 )
+position = Vector2( 384, 0 )

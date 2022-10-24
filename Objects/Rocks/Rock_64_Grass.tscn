@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Graphics/Rocks_Grass.png" type="Texture" id=1]
+
+[node name="Rock_64_Grass" type="Sprite"]
+texture = ExtResource( 1 )
+hframes = 6
+vframes = 6
