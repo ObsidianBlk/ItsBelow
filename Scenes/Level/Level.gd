@@ -56,11 +56,16 @@ onready var _player : Player = $Player
 onready var _camera : ShakeyCamera = $ShakeyCamera
 onready var _spider : Spider = $Spider
 
+onready var _message : Control = $GameEndScreens/Message
+onready var _height_meter : Control = $GameEndScreens/HeightMeter
+
 
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_height_meter.visible = false
+	_player.die() # I don't want the player processing at the moment
 	_spider_start = _spider.global_position
 	_CheckViewport()
 
@@ -164,6 +169,7 @@ func _SetPlayerStart() -> void:
 		_meters_traveled = 0.0
 		_player.revive()
 		_spider.global_position = _spider_start
+		_spider.start()
 		_camera.reset_to_start()
 
 # ------------------------------------------------------------------------------
@@ -188,8 +194,18 @@ func start_level() -> void:
 		_chunk_container.add_child(chunk)
 	_AddChunk()
 	_AddChunk()
-
+	_height_meter.visible = true
+	emit_signal("height_changed", 0.0)
 	call_deferred("_SetPlayerStart")
+
+func close_level() -> void:
+	for chunk in _chunks:
+		_chunk_container.remove_child(chunk)
+	_chunks.clear()
+	_player.die()
+	_spider.global_position = _spider_start
+	_spider.stop()
+	_height_meter.visible = false
 
 
 # ------------------------------------------------------------------------------
@@ -197,8 +213,18 @@ func start_level() -> void:
 # ------------------------------------------------------------------------------
 func _on_Spider_player_eaten():
 	print("Player has been eaten!")
-	emit_signal("game_over", "Spider has nibbled your bits!")
+	if not _message.is_connected("message_hidden", self, "_on_message_hidden"):
+		_message.connect("message_hidden", self, "_on_message_hidden", ["Spider has nibbled your bits!"])
+		_message.show_message("Your bits are slowly be crushed in the spider's mandables")
 
 func _on_ShakeyCamera_player_fell():
 	print("Player has falled to their doom!")
-	emit_signal("game_over", "You have fallen down the pit of doom!")
+	if not _message.is_connected("message_hidden", self, "_on_message_hidden"):
+		_message.connect("message_hidden", self, "_on_message_hidden", ["You have fallen down the pit of doom!"])
+		_message.show_message("Your bits are slowly be crushed in the spider's mandables")
+
+func _on_message_hidden(msg : String = "") -> void:
+	print("Message is Hidden")
+	_message.disconnect("message_hidden", self, "_on_message_hidden")
+	emit_signal("game_over", msg)
+

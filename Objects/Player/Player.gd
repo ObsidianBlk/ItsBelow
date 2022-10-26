@@ -37,6 +37,7 @@ var gravity : float = 1
 onready var sprite : Sprite = $Sprite
 onready var anim : AnimationPlayer = $AnimationPlayer
 onready var fsm : FSM = $FSM
+onready var sfx : Node = $SFX
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -115,6 +116,12 @@ func _ProcessVelocity_V(change : float = 0.0, instant : bool = false) -> void:
 	else:
 		velocity.y += change
 
+func _PlaySFX(sample_name : String, is_group : bool = false, force : bool = false) -> void:
+	if is_group:
+		sfx.play_from_group(sample_name, force)
+	else:
+		sfx.play(sample_name, force)
+
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
@@ -139,4 +146,5 @@ func revive() -> void:
 
 func die() -> void:
 	fsm.freeze()
+	anim.play("Idle")
 	self.visible = false

@@ -25,6 +25,7 @@ var _time_to_break : float = 0.0
 # ------------------------------------------------------------------------------
 onready var sprite : Sprite = $Sprite
 onready var tween : Tween = $Tween
+onready var sfx : Node = $SFX
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -37,6 +38,7 @@ func set_angle(a : float) -> void:
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	sfx.connect("finished", self, "_on_audio_finished")
 	tween.connect("tween_all_completed", self, "_on_wiggle_complete")
 	_time_to_break = rand_range(MIN_TIME_TO_BREAK, MAX_TIME_TO_BREAK)
 	set_physics_process(false)
@@ -50,6 +52,7 @@ func _process(delta : float) -> void:
 		if _time_to_break <= 0.0:
 			_interacting = false
 			set_physics_process(true)
+			sfx.play("scream", true)
 
 # ------------------------------------------------------------------------------
 # Private Methods
@@ -83,12 +86,16 @@ func _on_wiggle_complete() -> void:
 	if _interacting:
 		_Wiggle()
 
+func _on_audio_finished() -> void:
+	if _interacting:
+		sfx.play_from_group("cry")
 
 func _on_interact(active : bool) -> void:
 	if _time_to_break > 0.0:
 		_interacting = active
 		if _interacting and not tween.is_active():
 			_Wiggle()
+			sfx.play_from_group("cry")
 
 func _on_InteractZone_body_entered(body : Node2D) -> void:
 	if body.has_signal("interact"):

@@ -53,6 +53,7 @@ onready var right_back_sensor : RayCast2D = $RightLegBackSensor
 onready var left_sensor : RayCast2D = $LeftLegSensor
 onready var left_back_sensor : RayCast2D = $LeftLegBackSensor
 
+onready var mouth : Area2D = $Mouth
 onready var blood_particles : Particles2D = $BloodParticles
 
 
@@ -108,13 +109,13 @@ func _ready() -> void:
 		leg.step_time = step_time
 	for leg in right_legs:
 		leg.step_time = step_time
+	set_physics_process(false)
 	call_deferred("_InitLegSteps")
 
 
 func _physics_process(delta : float) -> void:
-	var move_vec : Vector2 = Vector2(0.0, -climb_speed) + _GetHorzSpeed(delta)
+	var move_vec : Vector2 = _GetVertSpeed() + _GetHorzSpeed(delta)
 	if _retreat_time > 0.0:
-		move_vec = Vector2(0.0, climb_speed)
 		_retreat_time -= delta
 	var res : KinematicCollision2D = move_and_collide(move_vec * delta)
 	if res != null:
@@ -145,9 +146,18 @@ func _GetClosestViewportEdge() -> float:
 	var d2r : float = abs(resolution.size.x - global_position.x)
 	return min(d2l, d2r)
 
-func _GetHorzSpeed(delta : float) -> Vector2:
+func _GetVertSpeed() -> Vector2:
 	var target : Node2D = target_node_ref.get_ref()
 	if target:
+		if _retreat_time > 0.0 or (not _player_dead and target.global_position.y > mouth.global_position.y):
+			return Vector2(0.0, climb_speed)
+		else:
+			return Vector2(0.0, -climb_speed)
+	return Vector2.ZERO
+
+func _GetHorzSpeed(delta : float) -> Vector2:
+	var target : Node2D = target_node_ref.get_ref()
+	if target and _retreat_time <= 0.0:
 		var dist_to_target : float = target.global_position.x - global_position.x
 		var hspeed : float = horizontal_speed * delta
 		if abs(dist_to_target) > hspeed:
@@ -199,10 +209,32 @@ func _CalcStepRate() -> void:
 	else:
 		_step_rate = 0.0
 
+
+# ------------------------------------------------------------------------------
+# Public Methods
+# ------------------------------------------------------------------------------
+func start() -> void:
+	set_physics_process(true)
+	visible = true
+	_player_dead = false
+
+func stop() -> void:
+	set_physics_process(false)
+	visible = false
+	for leg in left_legs:
+		leg.step_to(global_position, true)
+	for leg in right_legs:
+		leg.step_to(global_position, true)
+
+
+# ------------------------------------------------------------------------------
+# Handler Methods
+# ------------------------------------------------------------------------------
 func _on_Mouth_body_entered(body : Node2D) -> void:
 	if body.is_in_group("Player"):
 		if body.has_method("die"):
 			body.die()
+		_player_dead = true
 		blood_particles.global_position = body.global_position
 		blood_particles.emitting = true
 		var timer : SceneTreeTimer = get_tree().create_timer(blood_particles.lifetime)

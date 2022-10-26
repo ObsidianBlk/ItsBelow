@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/Graphics/Player_Sprite.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/FSM/FSM.gd" type="Script" id=2]
@@ -8,6 +8,10 @@
 [ext_resource path="res://Objects/Player/States/Fall.gd" type="Script" id=6]
 [ext_resource path="res://Objects/Player/States/Jump.gd" type="Script" id=7]
 [ext_resource path="res://Objects/Player/Interact.gd" type="Script" id=8]
+[ext_resource path="res://Objects/SFX/SFX.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Audio/SFX/Player/foot_step_003.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Audio/SFX/Player/foot_step_002.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Audio/SFX/Player/foot_step_001.wav" type="AudioStream" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.0
@@ -75,6 +79,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 12 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.3, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "step", true, false ],
+"method": "_PlaySFX"
+}, {
+"args": [ "step", true, false ],
+"method": "_PlaySFX"
+} ]
+}
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 collision_layer = 2
@@ -112,3 +133,8 @@ anims/Breath = SubResource( 2 )
 anims/Idle = SubResource( 3 )
 anims/RESET = SubResource( 4 )
 anims/Run = SubResource( 5 )
+
+[node name="SFX" parent="." instance=ExtResource( 9 )]
+sample_names = [ "foot1", "foot2", "foot3" ]
+sample_streams = [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ) ]
+sample_groups = [ "step,foot1,foot2,foot3" ]

@@ -104,7 +104,7 @@ func _LawOfCOS(a : float, b : float, c : float) -> float:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
-func step_to(pos : Vector2) -> void:
+func step_to(pos : Vector2, instant : bool = false) -> void:
 	if pos == goal_pos:
 		return
 	goal_pos = pos
@@ -118,4 +118,7 @@ func step_to(pos : Vector2) -> void:
 	start_pos = end_pos
 	int_pos = Vector2(mid + mid_body, highest - step_height)
 	step_time_elapsed = 0.0
+	
+	if instant:
+		_UpdateIK(goal_pos)
 

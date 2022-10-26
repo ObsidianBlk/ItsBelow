@@ -96,6 +96,6 @@ func freeze(enable : bool = true) -> void:
 	set_process_unhandled_input(not enable)
 
 func is_frozen() -> bool:
-	return is_physics_processing()
+	return not is_physics_processing()
 
 

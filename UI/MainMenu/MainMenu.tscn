@@ -1,8 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/MainMenu/MainMenu.gd" type="Script" id=1]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -26,3 +29,6 @@ margin_top = 24.0
 margin_right = 83.0
 margin_bottom = 44.0
 text = "Quit"
+
+[connection signal="pressed" from="Menu/Options/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Menu/Options/Quit" to="." method="_on_Quit_pressed"]
