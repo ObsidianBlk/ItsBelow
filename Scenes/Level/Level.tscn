@@ -23,6 +23,7 @@ max_speed = 320.0
 max_jump_height = 140.0
 
 [node name="SpiderBounds" parent="." instance=ExtResource( 3 )]
+target_node_path = NodePath("../Spider")
 
 [node name="ShakeyCamera" parent="." instance=ExtResource( 5 )]
 current = true

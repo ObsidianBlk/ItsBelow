@@ -6,6 +6,7 @@ extends Node2D
 # Signals
 # ------------------------------------------------------------------------------
 signal game_over(exit_reason)
+signal height_changed(height)
 
 # ------------------------------------------------------------------------------
 # Constants
@@ -21,6 +22,8 @@ const CHUNKS : Array = [
 	{"src" : "res://Scenes/Level/Chunks/Chunk_001.tscn", "scene" : null},
 	{"src" : "res://Scenes/Level/Chunks/Chunk_002.tscn", "scene" : null}
 ]
+
+const PIXELS_PER_METER : float = 48.0
 
 const TILES_ACROSS : int = 30
 const TILES_DOWN : int = 16
@@ -41,6 +44,10 @@ var _rng : RandomNumberGenerator = RandomNumberGenerator.new()
 var _viewport_rect : Rect2 = Rect2(0,0,0,0)
 var _spider_start : Vector2 = Vector2.ZERO
 
+var _initial_height : float = 0.0
+var _cur_height : float = 0.0
+var _meters_traveled : float = 0.0
+
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
@@ -60,6 +67,12 @@ func _ready() -> void:
 func _physics_process(_delta : float) -> void:
 	if _viewport_rect.size.x <= 0 or _viewport_rect.size.y <= 0:
 		_CheckViewport()
+	if _player.global_position.y < _cur_height:
+		_cur_height = _player.global_position.y
+		var meters = abs(_cur_height - _initial_height)/PIXELS_PER_METER
+		if floor(meters) > floor(_meters_traveled):
+			_meters_traveled = meters
+			emit_signal("height_changed", meters)
 	elif _chunks.size() > 1:
 		var vhh : float = _viewport_rect.size.y * 0.5
 		var tcpos : Vector2 = _TopChunkPosition()
@@ -146,6 +159,9 @@ func _SetPlayerStart() -> void:
 	var ps = get_tree().get_nodes_in_group("PlayerStart")
 	if ps.size() > 0:
 		_player.global_position = ps[0].global_position
+		_initial_height = _player.global_position.y
+		_cur_height = _initial_height
+		_meters_traveled = 0.0
 		_player.revive()
 		_spider.global_position = _spider_start
 		_camera.reset_to_start()

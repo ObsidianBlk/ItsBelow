@@ -1,0 +1,28 @@
+[gd_scene format=2]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Menu" type="CenterContainer" parent="."]
+anchor_bottom = 1.0
+
+[node name="Options" type="VBoxContainer" parent="Menu"]
+margin_top = 518.0
+margin_right = 83.0
+margin_bottom = 562.0
+
+[node name="Start" type="Button" parent="Menu/Options"]
+margin_right = 83.0
+margin_bottom = 20.0
+text = "Start Game"
+
+[node name="Quit" type="Button" parent="Menu/Options"]
+margin_top = 24.0
+margin_right = 83.0
+margin_bottom = 44.0
+text = "Quit"
