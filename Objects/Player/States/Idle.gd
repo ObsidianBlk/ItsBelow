@@ -14,6 +14,8 @@ func handle_input(event : InputEvent) -> void:
 			_sm.change_to_state("Move")
 	if event.is_action_pressed("player_jump"):
 		_sm.change_to_state("Jump")
+	elif event.is_action_pressed("player_interact"):
+		_sm.change_to_state("Interact")
 
 func physics_update(delta : float) -> void:
 	if not player.is_on_floor():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Objects/Spider/SpiderLeg/SpiderLeg.tscn" type="PackedScene" id=2]
@@ -6,6 +6,39 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 256, 384 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.464516, 1 )
+colors = PoolColorArray( 0.360784, 0.109804, 0.109804, 1, 0.360784, 0.109804, 0.109804, 1, 1, 0.296875, 0.296875, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+width = 128
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+width = 128
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 90.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 98.93
+initial_velocity_random = 0.49
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 8.0
+scale_curve = SubResource( 6 )
+color = Color( 0.576471, 0.184314, 0.184314, 1 )
+color_ramp = SubResource( 4 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 50.0
+height = 160.0
 
 [node name="Spider" type="KinematicBody2D"]
 collision_layer = 0
@@ -20,6 +53,18 @@ collision_mask = 1073741824
 
 [node name="LeftLegSensor" type="RayCast2D" parent="."]
 position = Vector2( 0, -482 )
+enabled = true
+cast_to = Vector2( -3000, 0 )
+collision_mask = 1073741824
+
+[node name="RightLegBackSensor" type="RayCast2D" parent="."]
+position = Vector2( 0, -18 )
+enabled = true
+cast_to = Vector2( 3000, 0 )
+collision_mask = 1073741824
+
+[node name="LeftLegBackSensor" type="RayCast2D" parent="."]
+position = Vector2( 0, -18 )
 enabled = true
 cast_to = Vector2( -3000, 0 )
 collision_mask = 1073741824
@@ -41,6 +86,16 @@ texture = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -80 )
 shape = SubResource( 1 )
+
+[node name="BloodParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 50
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+local_coords = false
+process_material = SubResource( 7 )
 
 [node name="RightLegs" type="Node2D" parent="."]
 
@@ -73,3 +128,14 @@ flipped = true
 [node name="LLeg4" parent="LeftLegs" instance=ExtResource( 2 )]
 position = Vector2( -113, -213 )
 flipped = true
+
+[node name="Mouth" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
+position = Vector2( 0, -427 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="Mouth" to="." method="_on_Mouth_body_entered"]

@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Objects/ShakeyCamera/ShakeyCamera.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1060, 64 )
 
 [node name="ShakeyCamera" type="Camera2D"]
 script = ExtResource( 1 )
@@ -9,3 +12,13 @@ script = ExtResource( 1 )
 one_shot = true
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="PlayerWatch" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerWatch"]
+position = Vector2( 0, 636 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="PlayerWatch" to="." method="_on_PlayerWatch_body_entered"]

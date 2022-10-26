@@ -1,5 +1,17 @@
 extends KinematicBody2D
+class_name Spider
 
+# ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal player_eaten()
+
+
+# ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+const MIN_RETREAT_TIME : float = 2.0
+const MAX_RETREAT_TIME : float = 4.0
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -24,6 +36,10 @@ var _use_left : bool = false
 var _step_rate : float = 2.0
 var _speed_x : float = 0.0
 
+var _retreat_time : float = 0.0
+
+var _player_dead : bool = false
+
 var target_node_ref : WeakRef = weakref(null)
 
 # ------------------------------------------------------------------------------
@@ -33,7 +49,11 @@ onready var left_legs : Array = $LeftLegs.get_children()
 onready var right_legs : Array = $RightLegs.get_children()
 
 onready var right_sensor : RayCast2D = $RightLegSensor
+onready var right_back_sensor : RayCast2D = $RightLegBackSensor
 onready var left_sensor : RayCast2D = $LeftLegSensor
+onready var left_back_sensor : RayCast2D = $LeftLegBackSensor
+
+onready var blood_particles : Particles2D = $BloodParticles
 
 
 
@@ -93,6 +113,9 @@ func _ready() -> void:
 
 func _physics_process(delta : float) -> void:
 	var move_vec : Vector2 = Vector2(0.0, -climb_speed) + _GetHorzSpeed(delta)
+	if _retreat_time > 0.0:
+		move_vec = Vector2(0.0, climb_speed)
+		_retreat_time -= delta
 	var res : KinematicCollision2D = move_and_collide(move_vec * delta)
 	if res != null:
 		_speed_x = 0.0
@@ -139,21 +162,30 @@ func _NextStep(offset : Vector2 = Vector2.ZERO) -> void:
 	var sensor : RayCast2D = null
 	if _use_left:
 		leg = left_legs[_cur_l_leg]
-		sensor = left_sensor
-		_cur_l_leg += 1
-		if _cur_l_leg >= left_legs.size():
-			_cur_l_leg = 0
+		sensor = left_sensor if _retreat_time <= 0.0 else left_back_sensor
+		if _retreat_time <= 0.0:
+			_cur_l_leg += 1
+			if _cur_l_leg >= left_legs.size():
+				_cur_l_leg = 0
+		else:
+			_cur_l_leg -= 1
+			if _cur_l_leg < 0:
+				_cur_l_leg = left_legs.size() - 1
 	else:
 		leg = right_legs[_cur_r_leg]
-		sensor = right_sensor
-		_cur_r_leg += 1
-		if _cur_r_leg >= right_legs.size():
-			_cur_r_leg = 0
+		sensor = right_sensor if _retreat_time <= 0.0 else right_back_sensor
+		if _retreat_time <= 0.0:
+			_cur_r_leg += 1
+			if _cur_r_leg >= right_legs.size():
+				_cur_r_leg = 0
+		else:
+			_cur_r_leg -= 1
+			if _cur_r_leg < 0:
+				_cur_r_leg = right_legs.size() - 1
 	_use_left = not _use_left
 	
 	if sensor.is_colliding():
 		var pos : Vector2 = sensor.get_collision_point()
-		print("Leg Pos: ", pos)
 		leg.step_to(pos + offset)
 	else:
 		print("No Leg Collision")
@@ -166,3 +198,21 @@ func _CalcStepRate() -> void:
 		_step_rate = distance_per_step / climb_speed
 	else:
 		_step_rate = 0.0
+
+func _on_Mouth_body_entered(body : Node2D) -> void:
+	if body.is_in_group("Player"):
+		if body.has_method("die"):
+			body.die()
+		blood_particles.global_position = body.global_position
+		blood_particles.emitting = true
+		var timer : SceneTreeTimer = get_tree().create_timer(blood_particles.lifetime)
+		yield(timer, "timeout")
+		emit_signal("player_eaten")
+	elif body.is_in_group("Cacoon"):
+		blood_particles.global_position = body.global_position
+		blood_particles.emitting = true
+		# This goes last as it's assumed .die() will free the node.
+		if body.has_method("die"):
+			body.die()
+		print("Spider ate cacoon!")
+		_retreat_time = rand_range(MIN_RETREAT_TIME, MAX_RETREAT_TIME)

@@ -3,6 +3,12 @@ class_name Player
 
 
 # ------------------------------------------------------------------------------
+# Interacting
+# ------------------------------------------------------------------------------
+signal interact(active)
+
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 export var dampening : float = 0.1					setget set_dampening
@@ -30,6 +36,7 @@ var gravity : float = 1
 # ------------------------------------------------------------------------------
 onready var sprite : Sprite = $Sprite
 onready var anim : AnimationPlayer = $AnimationPlayer
+onready var fsm : FSM = $FSM
 
 # ------------------------------------------------------------------------------
 # Setters
@@ -114,6 +121,9 @@ func _ProcessVelocity_V(change : float = 0.0, instant : bool = false) -> void:
 func get_class() -> String:
 	return "Player"
 
+func interact(active : bool = true) -> void:
+	emit_signal("interact", active)
+
 func face_left(left : bool = true) -> void:
 	facing_left = left
 	sprite.flip_h = facing_left
@@ -121,3 +131,12 @@ func face_left(left : bool = true) -> void:
 func play_animation(anim_name : String) -> void:
 	if anim.has_animation(anim_name):
 		anim.play(anim_name)
+
+func revive() -> void:
+	if fsm.is_frozen():
+		self.visible = true
+		fsm.freeze(false)
+
+func die() -> void:
+	fsm.freeze()
+	self.visible = false

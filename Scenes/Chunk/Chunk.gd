@@ -116,17 +116,21 @@ func _GetAvailableColumns(row : int) -> Array:
 			columns.append(c)
 	return columns
 
-func _GetColumnsAroundRect(plat_rect : Rect2, dist : int = 1) -> Array:
+func _GetTilesAroundRect(plat_rect : Rect2, dist : int = 1) -> Array:
 	var columns : Array = []
-	if _tilemap.get_cell(int(plat_rect.position.x - dist), int(plat_rect.position.y)) == TileMap.INVALID_CELL:
-		columns.append(int(plat_rect.position.x - dist))
-		
-	if _tilemap.get_cell(int(plat_rect.end.x + dist), int(plat_rect.position.y)) == TileMap.INVALID_CELL:
-		columns.append(int(plat_rect.end.x + dist))
+	var c : int = int(plat_rect.position.x - dist)
+	if c > 0 and _tilemap.get_cell(c, int(plat_rect.position.y)) == TileMap.INVALID_CELL:
+		columns.append(Vector2(c, plat_rect.position.y))
+	
+	c = int(plat_rect.end.x + dist)
+	if c < _cols - 2 and _tilemap.get_cell(c, int(plat_rect.position.y)) == TileMap.INVALID_CELL:
+		columns.append(Vector2(c, plat_rect.position.y))
 	
 	for col in range(plat_rect.position.x - dist, plat_rect.end.x + dist):
-		if _tilemap.get_cell(int(col), int(plat_rect.position.y - 1)) == TileMap.INVALID_CELL:
-			columns.append(int(col))
+		if col <= 0 or col >= _cols:
+			continue
+		if _tilemap.get_cell(int(col), int(plat_rect.position.y - dist)) == TileMap.INVALID_CELL:
+			columns.append(Vector2(col, plat_rect.position.y - dist))
 	return columns
 
 func _ValidPlatformPosition(plat_rect : Rect2) -> bool:
@@ -150,9 +154,15 @@ func _PlacePlatform(plat_rect : Rect2, check_overlap : bool = false) -> Rect2:
 	
 	var row : int = plat_rect.position.y
 	var length : int = 0
-	for col in range(plat_rect.position.x, plat_rect.end.x + 1):
+	for col in range(plat_rect.position.x, plat_rect.end.x):
 		if _tilemap.get_cell(col, row) != TileMap.INVALID_CELL:
 			break
+		if col == plat_rect.position.x:
+			_tilemap.set_cell(col, row, _GetPlatLeftEdge())
+		elif col == plat_rect.end.x:
+			_tilemap.set_cell(col, row, _GetPlatRightEdge())
+		else:
+			_tilemap.set_cell(col, row, _GetBase())
 		length += 1
 	
 	if length <= 0:
@@ -180,7 +190,7 @@ func get_solution_end_platform() -> Rect2:
 			pr = platinfo.rect
 	return pr
 
-func generate_new(prev_chunk : Node2D) -> void:
+func generate(prev_chunk : Node2D) -> void:
 	_CalcRowsCols()
 	_rng.seed = chunk_seed
 	_tilemap.clear()
@@ -206,10 +216,21 @@ func generate_new(prev_chunk : Node2D) -> void:
 		ps.add_to_group("PlayerStart")
 		add_child(ps)
 		last_plat = Rect2(0, cur_row, _cols, 1)
+		_RecordPlatform(last_plat, true)
 
 	# Figure out a solution set of platforms...
 	while last_plat.position.y > 0:
-		pass
+		var tiles : Array = _GetTilesAroundRect(last_plat, TILE_JUMP_DIST)
+		if tiles.size() <= 0:
+			printerr("ERROR: No tiles around last platform : ", last_plat)
+			return
+		
+		var pos : Vector2 = tiles[_rng.randi_range(0, tiles.size() - 1)]
+		var platform : Rect2 = Rect2(pos, Vector2(_rng.randi_range(MIN_PLATFORM_SIZE, _max_platform_size), 1))
+		platform = _PlacePlatform(platform, true)
+		if platform.position.x > 0:
+			_RecordPlatform(platform, true)
+			last_plat = platform
 #		var columns : Array = _GetAvailableColumns(cur_row)
 #		if columns.size() < 5:
 #			# Row is too full. Skip
@@ -239,7 +260,7 @@ func generate_new(prev_chunk : Node2D) -> void:
 
 
 # NOTE: Soon to be removed once the method above works!
-func generate() -> void:
+func generate_old() -> void:
 	_CalcRowsCols()
 	_rng.seed = chunk_seed
 	_tilemap.clear()

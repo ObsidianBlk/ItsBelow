@@ -20,9 +20,7 @@ var _active_state : FSMState = null
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	if Engine.editor_hint:
-		set_process(false)
-		set_physics_process(false)
-		set_process_unhandled_input(false)
+		freeze()
 		return
 	
 	for child in get_children():
@@ -91,5 +89,13 @@ func change_to_state(state_name : NodePath, msg : Dictionary = {}) -> void:
 				_active_state.exit()
 			_active_state = next_state
 			_active_state.enter(msg)
+
+func freeze(enable : bool = true) -> void:
+	set_process(not enable)
+	set_physics_process(not enable)
+	set_process_unhandled_input(not enable)
+
+func is_frozen() -> bool:
+	return is_physics_processing()
 
 

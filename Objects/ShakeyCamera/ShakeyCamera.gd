@@ -3,6 +3,11 @@ class_name ShakeyCamera
 
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal player_fell()
+
+# ------------------------------------------------------------------------------
 # Export Variables
 # ------------------------------------------------------------------------------
 export var target_node_group : String = "Player"
@@ -108,3 +113,12 @@ func _on_duration_timeout() -> void:
 	else:
 		offset = Vector2.ZERO
 
+
+func _on_PlayerWatch_body_entered(body : Node2D) -> void:
+	if body.is_in_group("Player"):
+		if body.has_method("die"):
+			body.die()
+		emit_signal("player_fell")
+	if body.is_in_group("Cacoon"):
+		if body.has_method("die"):
+			body.die()
