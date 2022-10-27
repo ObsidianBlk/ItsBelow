@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/Tilesets/Rock_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Objects/Cacoon/Cacoon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/LightPot/LightPot.tscn" type="PackedScene" id=3]
 
 [node name="BaseChunk" type="Node2D"]
 
@@ -15,3 +16,24 @@ position = Vector2( 841, 563 )
 
 [node name="Cacoon" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1121, 320 )
+
+[node name="LightPot" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1179, 638 )
+
+[node name="LightPot2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1426, 447 )
+
+[node name="LightPot3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1166, 320 )
+
+[node name="LightPot4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 770, 125 )
+
+[node name="LightPot5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 743, 254 )
+
+[node name="LightPot6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 124, 382 )
+
+[node name="LightPot7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1311, 64 )

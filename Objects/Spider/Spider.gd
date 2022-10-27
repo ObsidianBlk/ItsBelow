@@ -241,10 +241,11 @@ func _on_Mouth_body_entered(body : Node2D) -> void:
 		yield(timer, "timeout")
 		emit_signal("player_eaten")
 	elif body.is_in_group("Cacoon"):
-		blood_particles.global_position = body.global_position
-		blood_particles.emitting = true
-		# This goes last as it's assumed .die() will free the node.
-		if body.has_method("die"):
+		if body.has_method("die") and body.has_method("eatible"):
+			if not body.eatible():
+				return
+			blood_particles.global_position = body.global_position
+			blood_particles.emitting = true
 			body.die()
 		print("Spider ate cacoon!")
 		_retreat_time = rand_range(MIN_RETREAT_TIME, MAX_RETREAT_TIME)

@@ -79,6 +79,11 @@ func die() -> void:
 		parent.remove_child(self)
 		queue_free()
 
+func eatible() -> bool:
+	if _time_to_break <= 0.0:
+		return true
+	return false
+
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------

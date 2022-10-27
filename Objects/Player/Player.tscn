@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/Graphics/Player_Sprite.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/FSM/FSM.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Assets/Audio/SFX/Player/foot_step_003.wav" type="AudioStream" id=10]
 [ext_resource path="res://Assets/Audio/SFX/Player/foot_step_002.wav" type="AudioStream" id=11]
 [ext_resource path="res://Assets/Audio/SFX/Player/foot_step_001.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Graphics/Light/star_05.png" type="Texture" id=13]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.0
@@ -138,3 +139,8 @@ anims/Run = SubResource( 5 )
 sample_names = [ "foot1", "foot2", "foot3" ]
 sample_streams = [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ) ]
 sample_groups = [ "step,foot1,foot2,foot3" ]
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 13 )
+texture_scale = 0.75
+mode = 2
