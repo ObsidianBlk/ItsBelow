@@ -175,6 +175,9 @@ func _SetPlayerStart() -> void:
 # ------------------------------------------------------------------------------
 # Public Methods
 # ------------------------------------------------------------------------------
+func is_playing() -> bool:
+	return _chunks.size() > 0
+
 func start_level() -> void:
 	_rng.seed = level_seed
 

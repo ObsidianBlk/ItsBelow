@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/ConfirmQuit/ConfirmQuit.gd" type="Script" id=1]
+
+[node name="ConfirmQuit" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0823529, 0.0666667, 0.0666667, 0.784314 )
+
+[node name="Center" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBC" type="VBoxContainer" parent="Center"]
+margin_left = 838.0
+margin_top = 517.0
+margin_right = 1082.0
+margin_bottom = 563.0
+
+[node name="Label" type="Label" parent="Center/VBC"]
+margin_right = 244.0
+margin_bottom = 14.0
+text = "Does the fear drive you away so soon?"
+
+[node name="HSeparator" type="HSeparator" parent="Center/VBC"]
+margin_top = 18.0
+margin_right = 244.0
+margin_bottom = 22.0
+
+[node name="Options" type="HBoxContainer" parent="Center/VBC"]
+margin_top = 26.0
+margin_right = 244.0
+margin_bottom = 46.0
+
+[node name="Yes" type="Button" parent="Center/VBC/Options"]
+margin_right = 78.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Yes"
+
+[node name="Spacer" type="Control" parent="Center/VBC/Options"]
+margin_left = 82.0
+margin_right = 161.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="No" type="Button" parent="Center/VBC/Options"]
+margin_left = 165.0
+margin_right = 244.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "No"
+
+[connection signal="pressed" from="Center/VBC/Options/Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="Center/VBC/Options/No" to="." method="_on_No_pressed"]
