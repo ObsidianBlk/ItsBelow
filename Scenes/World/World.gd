@@ -96,6 +96,7 @@ func _on_request(req_name : String, msg : Dictionary = {}) -> void:
 					get_tree().paused = false
 				IBSys.fade_audio_out(IBSys.AUDIO_BUS.Music, 0.25)
 				yield(IBSys, "audio_fade_finished")
+				IBSys.save_settings()
 				get_tree().quit()
 			else:
 				ui.show_menu("ConfirmQuit")

@@ -48,7 +48,6 @@ func _ready() -> void:
 # Private Methods
 # ------------------------------------------------------------------------------
 func _FaderVolume(vol : float, bus_id : int) -> void:
-	print("FaderVolume Called")
 	set_audio_volume(bus_id, vol, false)
 
 # ------------------------------------------------------------------------------
@@ -91,7 +90,6 @@ func fade_audio_out(bus_id : int, duration : float, force_full : bool = false) -
 		set_audio_volume(bus_id, target, false)
 	var tween : SceneTreeTween = get_tree().create_tween()
 	var cur : float = get_audio_volume(bus_id)
-	print("Fade Out Cur Volume: ", cur, " | Dur: ", duration)
 	tween.connect("finished", self, "_on_fader_finished", [bus_id, "out"])
 	tween.tween_method(self, "_FaderVolume", cur, 0.0, duration, [bus_id])
 
@@ -105,7 +103,6 @@ func fade_audio_in(bus_id : int, duration : float, force_dead : bool = false) ->
 		set_audio_volume(bus_id, 0.0)
 	var target : float = _config.get_value(SEC_SETTINGS, "audio_%s"%[AUDIO_BUS_NAMES[bus_id]], 1.0)
 	var tween : SceneTreeTween = get_tree().create_tween()
-	print("Fad In Called")
 	tween.connect("finished", self, "_on_fader_finished", [bus_id, "in"])
 	tween.tween_method(self, "_FaderVolume", get_audio_volume(bus_id), target, duration, [bus_id])
 
@@ -127,6 +124,5 @@ func get_highest_score() -> int:
 # Handler Methods
 # ------------------------------------------------------------------------------
 func _on_fader_finished(bus_id, direction : String) -> void:
-	print("Done Fading")
 	_fading_active[bus_id] = false
 	emit_signal("audio_fade_finished", bus_id, direction)
