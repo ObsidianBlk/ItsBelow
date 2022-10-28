@@ -42,6 +42,10 @@ func _ready() -> void:
 				_config.set_value(SEC_SETTINGS, key, get_audio_volume(idx))
 		if _config.has_section_key(SEC_SETTINGS, "highest_score"):
 			_highest_score = _config.get_value(SEC_SETTINGS, "highest_score", 0)
+		if _config.has_section_key(SEC_SETTINGS, "fullscreen"):
+			var fs : bool = _config.get_value(SEC_SETTINGS, "fullscreen", false)
+			if fs != OS.window_fullscreen:
+				OS.window_fullscreen = fs
 
 
 # ------------------------------------------------------------------------------
@@ -58,6 +62,13 @@ func save_settings() -> void:
 	if err != OK:
 		printerr("ERROR: Failed to save config file!")
 
+func is_fullscreen() -> bool:
+	return OS.window_fullscreen
+
+func set_fullscreen(enable : bool) -> void:
+	if OS.window_fullscreen != enable:
+		OS.window_fullscreen = enable
+		_config.set_value(SEC_SETTINGS, "fullscreen", enable)
 
 func set_audio_volume(bus_id : int, vol : float, save_config : bool = false) -> void:
 	var bus_idx : int = -1

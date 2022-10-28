@@ -107,6 +107,13 @@ func _on_request(req_name : String, msg : Dictionary = {}) -> void:
 						ui.show_menu("GamePauseMenu")
 				else:
 					ui.show_menu("MainMenu")
+		"close_menu":
+			if level.is_playing():
+				if get_tree().paused:
+					get_tree().paused = false
+				ui.close_menus()
+			else:
+				ui.show_menu("MainMenu") # Return to default menu
 
 func _on_height_changed(meters : float) -> void:
 	print("Player Max Height: ", meters)

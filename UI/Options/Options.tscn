@@ -1,0 +1,192 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Theme/ItsBelow.theme" type="Theme" id=1]
+[ext_resource path="res://UI/Options/Options.gd" type="Script" id=2]
+
+[node name="Options" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VBC" type="VBoxContainer" parent="."]
+margin_left = 728.0
+margin_top = 430.0
+margin_right = 1192.0
+margin_bottom = 650.0
+
+[node name="Label" type="Label" parent="VBC"]
+margin_right = 464.0
+margin_bottom = 24.0
+text = "Options ... Below"
+
+[node name="HSeparator" type="HSeparator" parent="VBC"]
+margin_top = 28.0
+margin_right = 464.0
+margin_bottom = 32.0
+
+[node name="Sections" type="HBoxContainer" parent="VBC"]
+margin_top = 36.0
+margin_right = 464.0
+margin_bottom = 176.0
+custom_constants/separation = 24
+
+[node name="LeftColumn" type="VBoxContainer" parent="VBC/Sections"]
+margin_right = 157.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+
+[node name="VolumeMaster" type="VBoxContainer" parent="VBC/Sections/LeftColumn"]
+margin_right = 157.0
+margin_bottom = 44.0
+
+[node name="Label" type="Label" parent="VBC/Sections/LeftColumn/VolumeMaster"]
+margin_right = 157.0
+margin_bottom = 24.0
+text = "Master Volume"
+
+[node name="Value" type="HSlider" parent="VBC/Sections/LeftColumn/VolumeMaster"]
+margin_top = 28.0
+margin_right = 157.0
+margin_bottom = 44.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../../../../ExitOptions/Back")
+focus_neighbour_right = NodePath("../../../RightColumn/Fullscreen")
+focus_neighbour_bottom = NodePath("../../VolumeMusic/Value")
+focus_next = NodePath("../../VolumeMusic/Value")
+focus_previous = NodePath("../../../../ExitOptions/Back")
+tick_count = 10
+
+[node name="VolumeMusic" type="VBoxContainer" parent="VBC/Sections/LeftColumn"]
+margin_top = 48.0
+margin_right = 157.0
+margin_bottom = 92.0
+
+[node name="Label" type="Label" parent="VBC/Sections/LeftColumn/VolumeMusic"]
+margin_right = 157.0
+margin_bottom = 24.0
+text = "Music Volume"
+
+[node name="Value" type="HSlider" parent="VBC/Sections/LeftColumn/VolumeMusic"]
+margin_top = 28.0
+margin_right = 157.0
+margin_bottom = 44.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../../VolumeMaster/Value")
+focus_neighbour_right = NodePath("../../../RightColumn/Fullscreen")
+focus_neighbour_bottom = NodePath("../../VolumeSFX/Value")
+focus_next = NodePath("../../VolumeSFX/Value")
+focus_previous = NodePath("../../VolumeMaster/Value")
+tick_count = 10
+
+[node name="VolumeSFX" type="VBoxContainer" parent="VBC/Sections/LeftColumn"]
+margin_top = 96.0
+margin_right = 157.0
+margin_bottom = 140.0
+
+[node name="Label" type="Label" parent="VBC/Sections/LeftColumn/VolumeSFX"]
+margin_right = 157.0
+margin_bottom = 24.0
+text = "SFX Music"
+
+[node name="Value" type="HSlider" parent="VBC/Sections/LeftColumn/VolumeSFX"]
+margin_top = 28.0
+margin_right = 157.0
+margin_bottom = 44.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../../VolumeMusic/Value")
+focus_neighbour_right = NodePath("../../../RightColumn/Fullscreen")
+focus_neighbour_bottom = NodePath("../../../RightColumn/Fullscreen")
+focus_next = NodePath("../../../RightColumn/Fullscreen")
+focus_previous = NodePath("../../VolumeMusic/Value")
+tick_count = 10
+
+[node name="VSeparator" type="VSeparator" parent="VBC/Sections"]
+margin_left = 181.0
+margin_right = 185.0
+margin_bottom = 140.0
+
+[node name="RightColumn" type="VBoxContainer" parent="VBC/Sections"]
+margin_left = 209.0
+margin_right = 464.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+
+[node name="Fullscreen" type="CheckButton" parent="VBC/Sections/RightColumn"]
+margin_right = 255.0
+margin_bottom = 40.0
+focus_neighbour_left = NodePath("../../LeftColumn/VolumeMaster/Value")
+focus_neighbour_top = NodePath("../../LeftColumn/VolumeSFX/Value")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath("../HighScore/Clear")
+focus_next = NodePath("../HighScore/Clear")
+focus_previous = NodePath("../../LeftColumn/VolumeSFX/Value")
+text = "Full Screen"
+
+[node name="HighScore" type="VBoxContainer" parent="VBC/Sections/RightColumn"]
+margin_top = 44.0
+margin_right = 255.0
+margin_bottom = 104.0
+
+[node name="Info" type="HBoxContainer" parent="VBC/Sections/RightColumn/HighScore"]
+margin_right = 255.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="VBC/Sections/RightColumn/HighScore/Info"]
+margin_right = 176.0
+margin_bottom = 24.0
+text = "Record Height: "
+
+[node name="Value" type="Label" parent="VBC/Sections/RightColumn/HighScore/Info"]
+margin_left = 180.0
+margin_right = 255.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 75, 0 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "0"
+
+[node name="Clear" type="Button" parent="VBC/Sections/RightColumn/HighScore"]
+margin_top = 28.0
+margin_right = 255.0
+margin_bottom = 60.0
+focus_neighbour_left = NodePath("../../../LeftColumn/VolumeMaster/Value")
+focus_neighbour_top = NodePath("../../Fullscreen")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath("../../../../ExitOptions/Back")
+focus_next = NodePath("../../../../ExitOptions/Back")
+focus_previous = NodePath("../../Fullscreen")
+text = "Clear Record"
+
+[node name="HSeparator2" type="HSeparator" parent="VBC"]
+margin_top = 180.0
+margin_right = 464.0
+margin_bottom = 184.0
+
+[node name="ExitOptions" type="HBoxContainer" parent="VBC"]
+margin_top = 188.0
+margin_right = 464.0
+margin_bottom = 220.0
+
+[node name="Spacer" type="Control" parent="VBC/ExitOptions"]
+margin_right = 402.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Back" type="Button" parent="VBC/ExitOptions"]
+margin_left = 406.0
+margin_right = 464.0
+margin_bottom = 32.0
+focus_neighbour_left = NodePath("../../Sections/LeftColumn/VolumeMaster/Value")
+focus_neighbour_top = NodePath("../../Sections/RightColumn/HighScore/Clear")
+focus_neighbour_right = NodePath("../../Sections/LeftColumn/VolumeMaster/Value")
+focus_neighbour_bottom = NodePath("../../Sections/LeftColumn/VolumeMaster/Value")
+focus_next = NodePath("../../Sections/LeftColumn/VolumeMaster/Value")
+focus_previous = NodePath("../../Sections/RightColumn/HighScore/Clear")
+text = "Back"
+
+[connection signal="value_changed" from="VBC/Sections/LeftColumn/VolumeMaster/Value" to="." method="_on_VolumeMaster_value_changed"]
+[connection signal="value_changed" from="VBC/Sections/LeftColumn/VolumeMusic/Value" to="." method="_on_VolumeMusic_value_changed"]
+[connection signal="value_changed" from="VBC/Sections/LeftColumn/VolumeSFX/Value" to="." method="_on_VolumeSFX_value_changed"]
+[connection signal="toggled" from="VBC/Sections/RightColumn/Fullscreen" to="." method="_on_Fullscreen_toggled"]
+[connection signal="pressed" from="VBC/Sections/RightColumn/HighScore/Clear" to="." method="_on_ClearHighScore_pressed"]
+[connection signal="pressed" from="VBC/ExitOptions/Back" to="." method="_on_Back_pressed"]

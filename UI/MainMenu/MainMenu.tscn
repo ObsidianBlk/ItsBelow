@@ -18,19 +18,25 @@ anchor_bottom = 1.0
 anchor_bottom = 1.0
 
 [node name="Options" type="VBoxContainer" parent="Menu"]
-margin_top = 506.0
+margin_top = 488.0
 margin_right = 138.0
-margin_bottom = 574.0
+margin_bottom = 592.0
 
 [node name="Start" type="Button" parent="Menu/Options"]
 margin_right = 138.0
 margin_bottom = 32.0
 text = "Start Game"
 
-[node name="Quit" type="Button" parent="Menu/Options"]
+[node name="Options" type="Button" parent="Menu/Options"]
 margin_top = 36.0
 margin_right = 138.0
 margin_bottom = 68.0
+text = "Options"
+
+[node name="Quit" type="Button" parent="Menu/Options"]
+margin_top = 72.0
+margin_right = 138.0
+margin_bottom = 104.0
 text = "Quit"
 
 [node name="Viewport" type="Viewport" parent="."]
@@ -43,4 +49,5 @@ render_target_v_flip = true
 [node name="MainMenuBackdrop" parent="Viewport" instance=ExtResource( 2 )]
 
 [connection signal="pressed" from="Menu/Options/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Menu/Options/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="Menu/Options/Quit" to="." method="_on_Quit_pressed"]

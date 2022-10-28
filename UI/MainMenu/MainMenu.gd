@@ -47,6 +47,9 @@ func _on_menu_requested(menu_name : String) -> void:
 func _on_Start_pressed():
 	emit_signal("request", "start_game")
 
+func _on_Options_pressed() -> void:
+	emit_signal("request", "show_menu", {"menu_name":"Options"})
+
 func _on_Quit_pressed():
 	emit_signal("request", "quit")
 
