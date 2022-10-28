@@ -55,6 +55,10 @@ config/description="It's coming from below! Continue upwards!"
 run/main_scene="res://Scenes/World/World.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+IBSys="*res://Scripts/Auto/IBSYS.gd"
+
 [display]
 
 window/size/width=1920

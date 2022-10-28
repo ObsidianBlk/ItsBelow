@@ -7,11 +7,29 @@ extends Control
 # ------------------------------------------------------------------------------
 signal request(req_name, msg)
 
+
+
+# ------------------------------------------------------------------------------
+# Onready Variables
+# ------------------------------------------------------------------------------
+onready var vp : Viewport = $Viewport
+onready var texrec : TextureRect = $TextureRect
+
 # ------------------------------------------------------------------------------
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
 	visible = false
+	if texrec.texture == null:
+		texrec.texture = vp.get_texture()
+
+func _enter_tree() -> void:
+	if texrec:
+		texrec.texture = vp.get_texture()
+
+func _exit_tree() -> void:
+	if texrec:
+		texrec.texture = null
 
 # ------------------------------------------------------------------------------
 # Handler Methods

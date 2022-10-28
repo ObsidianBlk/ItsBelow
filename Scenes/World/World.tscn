@@ -24,3 +24,6 @@ initial_menu = "MainMenu"
 [node name="GamePauseMenu" parent="UI" instance=ExtResource( 5 )]
 
 [node name="MainMenu" parent="UI" instance=ExtResource( 2 )]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+bus = "Music"

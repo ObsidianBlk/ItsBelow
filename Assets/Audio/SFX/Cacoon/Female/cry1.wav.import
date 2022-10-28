@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/cry1.wav-671ee2e5731c954026b34cacaa181e5d.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Cacoon/Female/cry1.wav"
+dest_files=[ "res://.import/cry1.wav-671ee2e5731c954026b34cacaa181e5d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

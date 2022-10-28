@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Level/Level.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,15 @@
 [ext_resource path="res://Objects/ShakeyCamera/ShakeyCamera.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Level/Message.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Level/HeightMeter.gd" type="Script" id=7]
+[ext_resource path="res://Theme/ItsBelow.theme" type="Theme" id=8]
+[ext_resource path="res://Theme/FONT_Harold_64.tres" type="DynamicFont" id=9]
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Theme/Fonts/Raven Song.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = SubResource( 2 )
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -51,32 +60,39 @@ script = ExtResource( 6 )
 time_on_screen = 3.0
 
 [node name="Label" type="Label" parent="GameEndScreens/Message"]
-margin_left = 890.0
-margin_top = 533.0
-margin_right = 1029.0
-margin_bottom = 547.0
+margin_left = 791.0
+margin_top = 507.0
+margin_right = 1129.0
+margin_bottom = 572.0
+custom_fonts/font = SubResource( 3 )
 text = "Some spiffy message!"
 
 [node name="HeightMeter" type="HBoxContainer" parent="GameEndScreens"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -1920.0
+theme = ExtResource( 8 )
 script = ExtResource( 7 )
 
 [node name="Values" type="HBoxContainer" parent="GameEndScreens/HeightMeter"]
-margin_right = 256.0
-margin_bottom = 14.0
+margin_right = 479.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 256, 0 )
 
 [node name="Label" type="Label" parent="GameEndScreens/HeightMeter/Values"]
-margin_right = 90.0
-margin_bottom = 14.0
+margin_right = 436.0
+margin_bottom = 64.0
+custom_colors/font_color = Color( 0.14902, 0.027451, 0.027451, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
 text = "Highest Point:"
 
 [node name="Meters" type="Label" parent="GameEndScreens/HeightMeter/Values"]
-margin_left = 94.0
-margin_right = 102.0
-margin_bottom = 14.0
+margin_left = 440.0
+margin_right = 479.0
+margin_bottom = 64.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
 text = "0"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]

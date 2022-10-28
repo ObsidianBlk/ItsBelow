@@ -1,37 +1,41 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/Spider.png" type="Texture" id=1]
 [ext_resource path="res://Objects/Spider/SpiderLeg/SpiderLeg.gd" type="Script" id=2]
 
 [node name="SpiderLeg" type="Position2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 6, 0.5 )
+rotation = 1.5708
 texture = ExtResource( 1 )
 centered = false
-offset = Vector2( 0, -32 )
+offset = Vector2( -45, -512 )
+region_enabled = true
+region_rect = Rect2( 245, 508, 90, 512 )
 
 [node name="Lower" type="Position2D" parent="."]
-position = Vector2( 384, 0 )
+position = Vector2( 483, 0 )
 
 [node name="Sprite" type="Sprite" parent="Lower"]
-modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 6, 0.5 )
+position = Vector2( -30, 0 )
+rotation = 1.5708
 texture = ExtResource( 1 )
 centered = false
-offset = Vector2( 0, -32 )
+offset = Vector2( -52, -500 )
+region_enabled = true
+region_rect = Rect2( 75, 512, 104, 500 )
 
 [node name="Mid" type="Position2D" parent="Lower"]
-position = Vector2( 384, 0 )
+position = Vector2( 422, 0 )
 
 [node name="Sprite" type="Sprite" parent="Lower/Mid"]
-modulate = Color( 0, 0, 0, 1 )
-scale = Vector2( 6, 0.5 )
+rotation = 1.5708
 texture = ExtResource( 1 )
 centered = false
-offset = Vector2( 0, -32 )
+offset = Vector2( -51, -420 )
+region_enabled = true
+region_rect = Rect2( 94, 76, 102, 420 )
 
 [node name="End" type="Position2D" parent="Lower/Mid"]
 position = Vector2( 384, 0 )

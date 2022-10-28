@@ -16,24 +16,33 @@ position = Vector2( 841, 563 )
 
 [node name="Cacoon" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1121, 320 )
+gender = 1
 
 [node name="LightPot" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1179, 638 )
+verbose = true
+light_seed = 3161026589
 
 [node name="LightPot2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1426, 447 )
+light_seed = 2668139190
 
 [node name="LightPot3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1166, 320 )
+light_seed = 4134715227
 
 [node name="LightPot4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 770, 125 )
+light_seed = 4204663500
 
 [node name="LightPot5" parent="." instance=ExtResource( 3 )]
 position = Vector2( 743, 254 )
+light_seed = 1099556929
 
 [node name="LightPot6" parent="." instance=ExtResource( 3 )]
 position = Vector2( 124, 382 )
+light_seed = 3154986942
 
 [node name="LightPot7" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1311, 64 )
+light_seed = 1519752278
