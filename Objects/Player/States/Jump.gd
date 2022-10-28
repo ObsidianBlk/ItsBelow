@@ -13,6 +13,7 @@ func enter(msg : Dictionary = {}) -> void:
 	if player.is_on_floor() or "coyote_jump" in msg:
 		_initial_jump = true
 		_jump_active = Input.is_action_pressed("player_jump")
+		player.play_animation("Jumping")
 	else:
 		_sm.change_to_state("Fall", {"no_coyote_time":true})
 

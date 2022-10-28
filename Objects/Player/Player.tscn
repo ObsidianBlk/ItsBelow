@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/Graphics/Player_Sprite.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/FSM/FSM.gd" type="Script" id=2]
@@ -34,6 +34,23 @@ tracks/0/keys = {
 "values": [ 1, 0 ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "Falling"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 16, 17 ]
+}
+
 [sub_resource type="Animation" id=3]
 resource_name = "Idle"
 length = 0.1
@@ -48,6 +65,40 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Interacting"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 18, 19 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Jumping"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 14, 15 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -127,11 +178,15 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 13
+vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
 anims/Breath = SubResource( 2 )
+anims/Falling = SubResource( 6 )
 anims/Idle = SubResource( 3 )
+anims/Interacting = SubResource( 7 )
+anims/Jumping = SubResource( 8 )
 anims/RESET = SubResource( 4 )
 anims/Run = SubResource( 5 )
 

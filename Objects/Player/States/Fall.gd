@@ -12,6 +12,7 @@ var _preland_time : float = 0.0
 func enter(msg : Dictionary = {}) -> void:
 	if not "no_coyote_time" in msg:
 		_coyote_time = player.coyote_time
+	player.play_animation("Falling")
 
 
 func handle_input(event : InputEvent) -> void:
