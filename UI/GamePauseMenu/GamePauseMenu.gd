@@ -7,6 +7,11 @@ signal request(req_name, msg)
 
 
 # ------------------------------------------------------------------------------
+# Onready Variables
+# ------------------------------------------------------------------------------
+onready var resume_btn : Button = $Center/Options/Resume
+
+# ------------------------------------------------------------------------------
 # Override Method
 # ------------------------------------------------------------------------------
 func _ready() -> void:
@@ -25,7 +30,7 @@ func _on_close_menu() -> void:
 func _on_menu_requested(menu_name : String) -> void:
 	visible = menu_name == name
 	if visible == true:
-		$Center/Options/Resume.grab_focus()
+		resume_btn.grab_focus()
 
 func _on_Resume_pressed():
 	emit_signal("request", "resume_game")

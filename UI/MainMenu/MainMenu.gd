@@ -14,6 +14,7 @@ signal request(req_name, msg)
 # ------------------------------------------------------------------------------
 onready var vp : Viewport = $Viewport
 onready var texrec : TextureRect = $TextureRect
+onready var start_btn : Button = $Menu/Options/Start
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -22,6 +23,7 @@ func _ready() -> void:
 	visible = false
 	if texrec.texture == null:
 		texrec.texture = vp.get_texture()
+	
 
 func _enter_tree() -> void:
 	if texrec:
@@ -39,6 +41,8 @@ func _on_close_menu() -> void:
 
 func _on_menu_requested(menu_name : String) -> void:
 	visible = menu_name == name
+	if visible == true:
+		start_btn.grab_focus()
 
 func _on_Start_pressed():
 	emit_signal("request", "start_game")

@@ -8,6 +8,11 @@ signal request(req_name, msg)
 
 
 # ------------------------------------------------------------------------------
+# Onready Methods
+# ------------------------------------------------------------------------------
+onready var no_btn : Button = $Center/VBC/Options/No
+
+# ------------------------------------------------------------------------------
 # Override Method
 # ------------------------------------------------------------------------------
 func _ready() -> void:
@@ -21,6 +26,8 @@ func _on_close_menu() -> void:
 
 func _on_menu_requested(menu_name : String) -> void:
 	visible = menu_name == name
+	if visible == true:
+		no_btn.grab_focus()
 
 func _on_Yes_pressed():
 	emit_signal("request", "quit", {"immediate": true})

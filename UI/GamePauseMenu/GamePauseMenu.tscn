@@ -38,18 +38,36 @@ margin_bottom = 32.0
 margin_top = 36.0
 margin_right = 230.0
 margin_bottom = 68.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../QuitToDesktop")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath("../QuitToMainMenu")
+focus_next = NodePath("../QuitToMainMenu")
+focus_previous = NodePath("../QuitToDesktop")
 text = "Resume"
 
 [node name="QuitToMainMenu" type="Button" parent="Center/Options"]
 margin_top = 72.0
 margin_right = 230.0
 margin_bottom = 104.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../Resume")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath("../QuitToDesktop")
+focus_next = NodePath("../QuitToDesktop")
+focus_previous = NodePath("../Resume")
 text = "Quit to Main"
 
 [node name="QuitToDesktop" type="Button" parent="Center/Options"]
 margin_top = 108.0
 margin_right = 230.0
 margin_bottom = 140.0
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../QuitToMainMenu")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath("../Resume")
+focus_next = NodePath("../Resume")
+focus_previous = NodePath("../QuitToMainMenu")
 text = "Quit to Desktop"
 
 [connection signal="pressed" from="Center/Options/Resume" to="." method="_on_Resume_pressed"]

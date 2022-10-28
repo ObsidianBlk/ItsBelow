@@ -42,6 +42,12 @@ margin_bottom = 68.0
 [node name="Yes" type="Button" parent="Center/VBC/Options"]
 margin_right = 145.0
 margin_bottom = 32.0
+focus_neighbour_left = NodePath("../No")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath("../No")
+focus_neighbour_bottom = NodePath(".")
+focus_next = NodePath("../No")
+focus_previous = NodePath("../No")
 size_flags_horizontal = 3
 text = "Yes"
 
@@ -55,6 +61,12 @@ size_flags_horizontal = 3
 margin_left = 298.0
 margin_right = 444.0
 margin_bottom = 32.0
+focus_neighbour_left = NodePath("../Yes")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath("../Yes")
+focus_neighbour_bottom = NodePath(".")
+focus_next = NodePath("../Yes")
+focus_previous = NodePath("../Yes")
 size_flags_horizontal = 3
 text = "No"
 
