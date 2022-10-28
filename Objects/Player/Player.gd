@@ -128,8 +128,10 @@ func _PlaySFX(sample_name : String, is_group : bool = false, force : bool = fals
 func get_class() -> String:
 	return "Player"
 
-func interact(active : bool = true) -> void:
+func interact(active : bool = true, instant_done : bool = false) -> void:
 	emit_signal("interact", active)
+	if active and instant_done:
+		call_deferred("emit_signal", "interact", false)
 
 func face_left(left : bool = true) -> void:
 	facing_left = left

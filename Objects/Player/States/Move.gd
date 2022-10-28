@@ -21,6 +21,8 @@ func handle_input(event : InputEvent) -> void:
 		player.direction_x[1] = 0.0
 	elif event.is_action_pressed("player_jump"):
 		_sm.change_to_state("Jump")
+	elif event.is_action_pressed("player_interact"):
+		player.interact(true, true)
 
 func physics_update(delta : float) -> void:
 	if player.is_on_floor():
