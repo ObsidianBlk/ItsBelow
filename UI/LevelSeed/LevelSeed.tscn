@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Theme/ItsBelow.theme" type="Theme" id=1]
+[ext_resource path="res://UI/LevelSeed/LevelSeed.gd" type="Script" id=2]
+
+[node name="LevelSeed" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Main" type="VBoxContainer" parent="."]
+margin_left = 796.0
+margin_top = 484.0
+margin_right = 1123.0
+margin_bottom = 596.0
+
+[node name="Label" type="Label" parent="Main"]
+margin_right = 327.0
+margin_bottom = 24.0
+text = "Level Seed"
+
+[node name="HSeparator" type="HSeparator" parent="Main"]
+margin_top = 28.0
+margin_right = 327.0
+margin_bottom = 32.0
+
+[node name="Seed" type="HBoxContainer" parent="Main"]
+margin_top = 36.0
+margin_right = 327.0
+margin_bottom = 68.0
+
+[node name="LineEdit" type="LineEdit" parent="Main/Seed"]
+margin_right = 232.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 232, 0 )
+
+[node name="Random" type="Button" parent="Main/Seed"]
+margin_left = 236.0
+margin_right = 327.0
+margin_bottom = 32.0
+focus_neighbour_left = NodePath("../../Options/Start")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath("../../Options/Start")
+focus_neighbour_bottom = NodePath("../../Options/Start")
+focus_next = NodePath("../../Options/Start")
+focus_previous = NodePath("../../Options/Cancel")
+text = "Random"
+
+[node name="HSeparator2" type="HSeparator" parent="Main"]
+margin_top = 72.0
+margin_right = 327.0
+margin_bottom = 76.0
+
+[node name="Options" type="HBoxContainer" parent="Main"]
+margin_top = 80.0
+margin_right = 327.0
+margin_bottom = 112.0
+
+[node name="Start" type="Button" parent="Main/Options"]
+margin_right = 161.0
+margin_bottom = 32.0
+focus_neighbour_left = NodePath("../../Seed/Random")
+focus_neighbour_top = NodePath("../../Seed/Random")
+focus_neighbour_right = NodePath("../Cancel")
+focus_neighbour_bottom = NodePath("../../Seed/Random")
+focus_next = NodePath("../Cancel")
+focus_previous = NodePath("../../Seed/Random")
+size_flags_horizontal = 3
+text = "Start"
+
+[node name="Cancel" type="Button" parent="Main/Options"]
+margin_left = 165.0
+margin_right = 327.0
+margin_bottom = 32.0
+focus_neighbour_left = NodePath("../Start")
+focus_neighbour_top = NodePath("../../Seed/Random")
+focus_neighbour_right = NodePath("../../Seed/Random")
+focus_neighbour_bottom = NodePath("../../Seed/Random")
+focus_next = NodePath("../../Seed/Random")
+focus_previous = NodePath("../Start")
+size_flags_horizontal = 3
+text = "Cancel"
+
+[connection signal="pressed" from="Main/Seed/Random" to="." method="_on_Random_pressed"]
+[connection signal="pressed" from="Main/Options/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Main/Options/Cancel" to="." method="_on_Cancel_pressed"]

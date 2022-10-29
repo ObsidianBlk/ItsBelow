@@ -15,12 +15,15 @@ signal height_changed(height)
 const CHUNK : PackedScene = preload("res://Scenes/Chunk/Chunk.tscn")
 
 const BASE_CHUNKS : Array = [
-	{"src" : "res://Scenes/Level/BaseChunk/BaseChunk.tscn", "scene" : null}
+	{"src" : "res://Scenes/Level/BaseChunk/BaseChunk.tscn", "scene" : null},
+	{"src" : "res://Scenes/Level/BaseChunk/BaseChunk2.tscn", "scene" : null},
+	{"src" : "res://Scenes/Level/BaseChunk/BaseChunk3.tscn", "scene" : null},
 ]
 
 const CHUNKS : Array = [
 	{"src" : "res://Scenes/Level/Chunks/Chunk_001.tscn", "scene" : null},
-	{"src" : "res://Scenes/Level/Chunks/Chunk_002.tscn", "scene" : null}
+	{"src" : "res://Scenes/Level/Chunks/Chunk_002.tscn", "scene" : null},
+	{"src" : "res://Scenes/Level/Chunks/Chunk_003.tscn", "scene" : null},
 ]
 
 const PIXELS_PER_METER : float = 48.0

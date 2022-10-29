@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/Tilesets/Rock_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Objects/Cacoon/Cacoon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/LightPot/LightPot.tscn" type="PackedScene" id=3]
 
 [node name="Chunk_001" type="Node2D"]
 
@@ -8,3 +10,43 @@
 tile_set = ExtResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 4, 0, 15, 2, 0, 16, 4, 0, 17, 3, 0, 27, 4, 0, 28, 4, 0, 29, 4, 0, 65536, 4, 0, 65537, 0, 0, 65546, 2, 0, 65547, 4, 0, 65548, 3, 0, 65558, 2, 0, 65559, 0, 0, 65561, 1, 0, 65562, 4, 0, 65563, 4, 0, 65564, 4, 0, 65565, 4, 0, 131072, 4, 0, 131073, 4, 0, 131074, 0, 0, 131077, 2, 0, 131078, 4, 0, 131079, 3, 0, 131100, 4, 0, 131101, 4, 0, 196608, 4, 0, 196609, 4, 0, 196610, 4, 0, 196623, 2, 0, 196624, 3, 0, 196632, 4, 0, 196635, 1, 0, 196636, 4, 0, 196637, 4, 0, 262144, 4, 0, 262145, 4, 0, 262146, 4, 0, 262153, 1, 0, 262154, 4, 0, 262155, 4, 0, 262156, 3, 0, 262163, 2, 0, 262164, 4, 0, 262165, 4, 0, 262166, 3, 0, 262170, 1, 0, 262171, 4, 0, 262172, 4, 0, 262173, 4, 0, 327680, 4, 0, 327681, 4, 0, 327682, 4, 0, 327688, 1, 0, 327689, 3, 0, 327706, 2, 0, 327707, 4, 0, 327708, 4, 0, 327709, 4, 0, 393216, 4, 0, 393217, 4, 0, 393218, 3, 0, 393223, 1, 0, 393224, 3, 0, 393239, 1, 0, 393240, 4, 0, 393241, 4, 0, 393242, 4, 0, 393243, 4, 0, 393244, 4, 0, 393245, 4, 0, 458752, 4, 0, 458756, 2, 0, 458757, 4, 0, 458758, 4, 0, 458759, 4, 0, 458760, 4, 0, 458761, 3, 0, 458764, 2, 0, 458765, 3, 0, 458774, 1, 0, 458775, 3, 0, 458778, 1, 0, 458779, 4, 0, 458780, 4, 0, 458781, 4, 0, 524288, 4, 0, 524304, 2, 0, 524305, 4, 0, 524306, 4, 0, 524307, 4, 0, 524308, 4, 0, 524309, 4, 0, 524310, 3, 0, 524314, 2, 0, 524315, 4, 0, 524316, 4, 0, 524317, 4, 0, 589824, 4, 0, 589825, 4, 0, 589826, 0, 0, 589835, 2, 0, 589836, 3, 0, 589851, 2, 0, 589852, 4, 0, 589853, 4, 0, 655360, 4, 0, 655361, 4, 0, 655362, 4, 0, 655363, 4, 0, 655364, 4, 0, 655365, 4, 0, 655366, 3, 0, 655383, 1, 0, 655384, 4, 0, 655385, 0, 0, 655388, 4, 0, 655389, 4, 0, 720896, 4, 0, 720897, 4, 0, 720898, 4, 0, 720899, 4, 0, 720912, 2, 0, 720913, 4, 0, 720914, 4, 0, 720915, 0, 0, 720917, 2, 0, 720918, 4, 0, 720919, 4, 0, 720920, 4, 0, 720921, 4, 0, 720922, 4, 0, 720923, 4, 0, 720924, 4, 0, 720925, 4, 0, 786432, 4, 0, 786433, 4, 0, 786434, 4, 0, 786435, 3, 0, 786451, 2, 0, 786452, 0, 0, 786459, 4, 0, 786460, 4, 0, 786461, 4, 0, 851968, 4, 0, 851969, 4, 0, 851970, 3, 0, 851976, 2, 0, 851977, 4, 0, 851978, 4, 0, 851979, 0, 0, 851988, 2, 0, 851989, 0, 0, 851995, 4, 0, 851996, 4, 0, 851997, 4, 0, 917504, 4, 0, 917505, 3, 0, 917515, 2, 0, 917516, 0, 0, 917525, 2, 0, 917526, 0, 0, 917531, 2, 0, 917532, 4, 0, 917533, 4, 0, 983040, 4, 0, 983041, 4, 0, 983042, 4, 0, 983043, 4, 0, 983044, 4, 0, 983045, 3, 0, 983052, 2, 0, 983053, 4, 0, 983054, 4, 0, 983055, 3, 0, 983062, 2, 0, 983063, 4, 0, 983064, 3, 0, 983068, 2, 0, 983069, 4, 0, 1048576, 4, 0, 1048605, 4, 0 )
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="LightPot" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 898, 960 )
+
+[node name="LightPot2" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 260, 959 )
+
+[node name="LightPot3" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 1511, 960 )
+
+[node name="LightPot4" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 1364, 705 )
+
+[node name="LightPot5" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 749, 576 )
+
+[node name="LightPot6" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 228, 641 )
+
+[node name="LightPot7" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 1550, 385 )
+
+[node name="LightPot8" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 990, 192 )
+
+[node name="LightPot9" parent="Lights" instance=ExtResource( 3 )]
+position = Vector2( 407, 128 )
+
+[node name="Cacoons" type="Node2D" parent="."]
+
+[node name="Cacoon" parent="Cacoons" instance=ExtResource( 2 )]
+position = Vector2( 839, 448 )
+
+[node name="Cacoon2" parent="Cacoons" instance=ExtResource( 2 )]
+position = Vector2( 1392, 255 )
+
+[node name="Cacoon3" parent="Cacoons" instance=ExtResource( 2 )]
+position = Vector2( 317, 960 )

@@ -12,6 +12,9 @@ signal player_eaten()
 # ------------------------------------------------------------------------------
 const MIN_RETREAT_TIME : float = 2.0
 const MAX_RETREAT_TIME : float = 4.0
+const FREEZE_TIME : float = 1.0
+
+const TARGET_DIST_SPEED_MULTIPLIER : float = 3.0
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -36,6 +39,7 @@ var _use_left : bool = false
 var _step_rate : float = 2.0
 var _speed_x : float = 0.0
 
+var _freeze_time : float = 0.0
 var _retreat_time : float = 0.0
 
 var _player_dead : bool = false
@@ -114,12 +118,17 @@ func _ready() -> void:
 
 
 func _physics_process(delta : float) -> void:
-	var move_vec : Vector2 = _GetVertSpeed() + _GetHorzSpeed(delta)
+	var move_vec : Vector2 = Vector2.ZERO
+	if _freeze_time <= 0.0:
+		move_vec = _GetVertSpeed() + _GetHorzSpeed(delta)
 	if _retreat_time > 0.0:
 		_retreat_time -= delta
-	var res : KinematicCollision2D = move_and_collide(move_vec * delta)
-	if res != null:
-		_speed_x = 0.0
+	if _freeze_time <= 0.0:
+		var res : KinematicCollision2D = move_and_collide(move_vec * delta)
+		if res != null:
+			_speed_x = 0.0
+	else:
+		_freeze_time -= delta
 
 func _process(delta : float) -> void:
 	_last_step_time += delta
@@ -152,7 +161,11 @@ func _GetVertSpeed() -> Vector2:
 		if _retreat_time > 0.0 or (not _player_dead and target.global_position.y > mouth.global_position.y):
 			return Vector2(0.0, climb_speed)
 		else:
-			return Vector2(0.0, -climb_speed)
+			var mult : float = 1.0
+			var targ_dist : float = abs(target.global_position.y - mouth.global_position.y)
+			if targ_dist > 400.0:
+				mult = TARGET_DIST_SPEED_MULTIPLIER
+			return Vector2(0.0, -climb_speed * mult)
 	return Vector2.ZERO
 
 func _GetHorzSpeed(delta : float) -> Vector2:
@@ -226,6 +239,8 @@ func stop() -> void:
 	for leg in right_legs:
 		leg.step_to(global_position, true)
 
+func freeze() -> void:
+	_freeze_time = FREEZE_TIME
 
 # ------------------------------------------------------------------------------
 # Handler Methods

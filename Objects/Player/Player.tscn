@@ -173,10 +173,13 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -28 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -32, -64 )
 hframes = 13
 vframes = 2
 
@@ -196,6 +199,7 @@ sample_streams = [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ) ]
 sample_groups = [ "step,foot1,foot2,foot3" ]
 
 [node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 0, -36 )
 texture = ExtResource( 13 )
 texture_scale = 0.75
 mode = 2

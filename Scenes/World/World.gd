@@ -80,6 +80,14 @@ func _on_request(req_name : String, msg : Dictionary = {}) -> void:
 			ui.close_menus()
 			IBSys.fade_audio_out(IBSys.AUDIO_BUS.Music, 0.25)
 			yield(IBSys, "audio_fade_finished")
+			if "seed" in msg:
+				if typeof(msg["seed"]) == TYPE_INT:
+					level.level_seed = msg["seed"]
+				elif typeof(msg["seed"]) == TYPE_STRING:
+					if msg["seed"].is_valid_integer():
+						level.level_seed = msg["seed"].to_int()
+					elif msg["seed"].strip_edges() != "":
+						level.level_seed = msg["seed"].hash()
 			level.start_level()
 			music.stop()
 			music.stream = MUSIC_GAME

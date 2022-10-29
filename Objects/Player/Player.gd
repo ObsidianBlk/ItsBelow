@@ -145,6 +145,7 @@ func revive() -> void:
 	if fsm.is_frozen():
 		self.visible = true
 		fsm.freeze(false)
+		fsm.change_to_initial_state()
 
 func die() -> void:
 	fsm.freeze()

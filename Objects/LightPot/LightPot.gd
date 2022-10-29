@@ -6,6 +6,9 @@ tool
 # Constants
 # ------------------------------------------------------------------------------
 const TIME_SCALE : float = 30.0
+const SPARK_SPAWN_TIME : float = 0.1
+
+const SPARK : PackedScene = preload("res://Objects/LightPot/FireSpark/FireSpark.tscn")
 
 # ------------------------------------------------------------------------------
 # Export Variables
@@ -17,6 +20,11 @@ export (float, 0.1, 10.0) var intact_light_energy : float = 3.0
 export var intact_light_scale : float = 3.0
 export (float, 0.1, 10.0) var broken_light_energy : float = 2.0
 export var broken_light_scale : float = 2.0
+export var spark_count : int = 6
+export var spark_min_life : float = 2.0
+export var spark_max_life : float = 4.0
+export var spark_min_death : float = 0.5
+export var spark_max_death : float = 1.0
 
 
 # ------------------------------------------------------------------------------
@@ -32,6 +40,7 @@ onready var light : Light2D = $Light2D
 onready var sprite : Sprite = $Sprite
 onready var anim : AnimationPlayer = $AnimationPlayer
 onready var sfx : Node = $SFX
+onready var spark_spawn_pos : Position2D = $SparkSpawn
 
 
 # ------------------------------------------------------------------------------
@@ -69,6 +78,30 @@ func _process(delta : float) -> void:
 
 
 # ------------------------------------------------------------------------------
+# Private Methods
+# ------------------------------------------------------------------------------
+func _SpawnSpark() -> void:
+	if not is_inside_tree():
+		return
+	var parent = get_parent()
+	if not parent:
+		return
+	var spark = SPARK.instance()
+	if spark is RigidBody2D:
+		spark.lifetime = rand_range(spark_min_life, spark_max_life)
+		spark.deathtime = rand_range(spark_min_death, spark_max_death)
+		parent.add_child(spark)
+		spark.global_position = spark_spawn_pos.global_position
+		var impulse : Vector2 = Vector2.UP.rotated(deg2rad(rand_range(-60, 60))) * 200.0
+		spark.apply_central_impulse(impulse)
+		
+		spark_count -= 1
+		if spark_count > 0:
+			var timer : SceneTreeTimer = get_tree().create_timer(SPARK_SPAWN_TIME)
+			timer.connect("timeout", self, "_SpawnSpark")
+
+
+# ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
 
@@ -76,6 +109,7 @@ func _on_interact(active : bool) -> void:
 	if not broken:
 		set_broken(true)
 		sfx.play_from_group("break")
+		_SpawnSpark()
 
 
 func _on_InteractArea_body_entered(body):

@@ -90,6 +90,11 @@ func change_to_state(state_name : NodePath, msg : Dictionary = {}) -> void:
 			_active_state = next_state
 			_active_state.enter(msg)
 
+func change_to_initial_state() -> void:
+	if _initial_state != "":
+		change_to_state(_initial_state)
+
+
 func freeze(enable : bool = true) -> void:
 	set_process(not enable)
 	set_physics_process(not enable)
