@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/MainMenuBackdrop/MainMenuBackdrop.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Theme/ItsBelow.theme" type="Theme" id=3]
+[ext_resource path="res://Assets/Graphics/JamOWeen3_Logo_PNG_CutByJoosh.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Graphics/ObsidianLogo.png" type="Texture" id=5]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -14,26 +16,76 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Menu" type="CenterContainer" parent="."]
+[node name="Logos" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -176.0
+rect_min_size = Vector2( 0, 176 )
+custom_constants/margin_right = 24
+custom_constants/margin_top = 24
+custom_constants/margin_left = 24
+custom_constants/margin_bottom = 24
 
-[node name="Options" type="VBoxContainer" parent="Menu"]
+[node name="HBC" type="HBoxContainer" parent="Logos"]
+margin_left = 24.0
+margin_top = 24.0
+margin_right = 1896.0
+margin_bottom = 152.0
+
+[node name="Spacer" type="Control" parent="Logos/HBC"]
+margin_right = 1292.0
+margin_bottom = 128.0
+size_flags_horizontal = 3
+
+[node name="Logos" type="HBoxContainer" parent="Logos/HBC"]
+margin_left = 1296.0
+margin_right = 1872.0
+margin_bottom = 128.0
+custom_constants/separation = 64
+
+[node name="Jamoween" type="Button" parent="Logos/HBC/Logos"]
+margin_right = 384.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 384, 128 )
+icon = ExtResource( 4 )
+expand_icon = true
+
+[node name="Obsidian" type="Button" parent="Logos/HBC/Logos"]
+margin_left = 448.0
+margin_right = 576.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+icon = ExtResource( 5 )
+expand_icon = true
+
+[node name="Menu" type="MarginContainer" parent="."]
+anchor_bottom = 1.0
+custom_constants/margin_right = 24
+custom_constants/margin_left = 24
+
+[node name="Center" type="CenterContainer" parent="Menu"]
+margin_left = 24.0
+margin_right = 162.0
+margin_bottom = 1080.0
+
+[node name="Options" type="VBoxContainer" parent="Menu/Center"]
 margin_top = 488.0
 margin_right = 138.0
 margin_bottom = 592.0
 
-[node name="Start" type="Button" parent="Menu/Options"]
+[node name="Start" type="Button" parent="Menu/Center/Options"]
 margin_right = 138.0
 margin_bottom = 32.0
 text = "Start Game"
 
-[node name="Options" type="Button" parent="Menu/Options"]
+[node name="Options" type="Button" parent="Menu/Center/Options"]
 margin_top = 36.0
 margin_right = 138.0
 margin_bottom = 68.0
 text = "Options"
 
-[node name="Quit" type="Button" parent="Menu/Options"]
+[node name="Quit" type="Button" parent="Menu/Center/Options"]
 margin_top = 72.0
 margin_right = 138.0
 margin_bottom = 104.0
@@ -48,6 +100,8 @@ render_target_v_flip = true
 
 [node name="MainMenuBackdrop" parent="Viewport" instance=ExtResource( 2 )]
 
-[connection signal="pressed" from="Menu/Options/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="Menu/Options/Options" to="." method="_on_Options_pressed"]
-[connection signal="pressed" from="Menu/Options/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="Logos/HBC/Logos/Jamoween" to="." method="_on_Jamoween_pressed"]
+[connection signal="pressed" from="Logos/HBC/Logos/Obsidian" to="." method="_on_Obsidian_pressed"]
+[connection signal="pressed" from="Menu/Center/Options/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="Menu/Center/Options/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="Menu/Center/Options/Quit" to="." method="_on_Quit_pressed"]

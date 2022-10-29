@@ -1,8 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/Graphics/Spider.png" type="Texture" id=1]
 [ext_resource path="res://Objects/Spider/SpiderLeg/SpiderLeg.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/Spider/Spider.gd" type="Script" id=3]
+[ext_resource path="res://Objects/SFX/SFX.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Audio/SFX/Spider/tap1.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Audio/SFX/Spider/chitter1.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Audio/SFX/Spider/tap2.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Audio/SFX/Spider/tap3.wav" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Audio/SFX/Spider/Crunch.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Audio/SFX/Spider/chitter2.wav" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 256, 384 )
@@ -186,5 +193,10 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
 rotation = 1.5708
 shape = SubResource( 2 )
+
+[node name="SFX" parent="." instance=ExtResource( 4 )]
+sample_names = [ "crunch", "chitter1", "chitter2", "tap1", "tap2", "tap3" ]
+sample_streams = [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ) ]
+sample_groups = [ "chitter,chitter1,chitter2", "tap,tap1,tap2,tap3" ]
 
 [connection signal="body_entered" from="Mouth" to="." method="_on_Mouth_body_entered"]

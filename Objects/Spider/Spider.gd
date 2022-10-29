@@ -5,6 +5,7 @@ class_name Spider
 # Signals
 # ------------------------------------------------------------------------------
 signal player_eaten()
+signal spider_stepped(pos)
 
 
 # ------------------------------------------------------------------------------
@@ -46,6 +47,8 @@ var _player_dead : bool = false
 
 var target_node_ref : WeakRef = weakref(null)
 
+var _silence : bool = true
+
 # ------------------------------------------------------------------------------
 # Onready Variables
 # ------------------------------------------------------------------------------
@@ -60,6 +63,7 @@ onready var left_back_sensor : RayCast2D = $LeftLegBackSensor
 onready var mouth : Area2D = $Mouth
 onready var blood_particles : Particles2D = $BloodParticles
 
+onready var sfx : Node2D = $SFX
 
 
 # ------------------------------------------------------------------------------
@@ -111,8 +115,10 @@ func _ready() -> void:
 	
 	for leg in left_legs:
 		leg.step_time = step_time
+		leg.connect("step_completed", self, "_on_step_completed")
 	for leg in right_legs:
 		leg.step_time = step_time
+		leg.connect("step_completed", self, "_on_step_completed")
 	set_physics_process(false)
 	call_deferred("_InitLegSteps")
 
@@ -227,11 +233,13 @@ func _CalcStepRate() -> void:
 # Public Methods
 # ------------------------------------------------------------------------------
 func start() -> void:
+	_silence = false
 	set_physics_process(true)
 	visible = true
 	_player_dead = false
 
 func stop() -> void:
+	_silence = true
 	set_physics_process(false)
 	visible = false
 	for leg in left_legs:
@@ -245,11 +253,18 @@ func freeze() -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
+func _on_step_completed(pos : Vector2) -> void:
+	if not _silence:
+		sfx.play_from_group("tap")
+	emit_signal("spider_stepped", pos)
+
 func _on_Mouth_body_entered(body : Node2D) -> void:
 	if body.is_in_group("Player"):
 		if body.has_method("die"):
 			body.die()
 		_player_dead = true
+		if not _silence:
+			sfx.play("crunch")
 		blood_particles.global_position = body.global_position
 		blood_particles.emitting = true
 		var timer : SceneTreeTimer = get_tree().create_timer(blood_particles.lifetime)
@@ -259,6 +274,8 @@ func _on_Mouth_body_entered(body : Node2D) -> void:
 		if body.has_method("die") and body.has_method("eatible"):
 			if not body.eatible():
 				return
+			if not _silence:
+				sfx.play("crunch")
 			blood_particles.global_position = body.global_position
 			blood_particles.emitting = true
 			body.die()

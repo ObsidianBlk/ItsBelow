@@ -72,7 +72,8 @@ func _Shake(amplitude : float, duration : float) -> void:
 		rand_range(-amplitude, amplitude),
 		rand_range(-amplitude, amplitude)
 	)
-	_tween.connect("tween_all_completed", self, "_on_shake_finished")
+	if not _tween.is_connected("tween_all_completed", self, "_on_shake_finished"):
+		_tween.connect("tween_all_completed", self, "_on_shake_finished")
 	_tween.interpolate_property(self, "offset", self.offset, vec, duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	_tween.start()
 

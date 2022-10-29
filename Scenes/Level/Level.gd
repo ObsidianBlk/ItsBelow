@@ -24,6 +24,7 @@ const CHUNKS : Array = [
 	{"src" : "res://Scenes/Level/Chunks/Chunk_001.tscn", "scene" : null},
 	{"src" : "res://Scenes/Level/Chunks/Chunk_002.tscn", "scene" : null},
 	{"src" : "res://Scenes/Level/Chunks/Chunk_003.tscn", "scene" : null},
+	{"src" : "res://Scenes/Level/Chunks/Chunk_004.tscn", "scene" : null},
 ]
 
 const PIXELS_PER_METER : float = 48.0
@@ -67,6 +68,7 @@ onready var _height_meter : Control = $GameEndScreens/HeightMeter
 # Override Methods
 # ------------------------------------------------------------------------------
 func _ready() -> void:
+	_spider.connect("spider_stepped", self, "_on_spider_stepped")
 	_height_meter.visible = false
 	_player.die() # I don't want the player processing at the moment
 	_spider_start = _spider.global_position
@@ -217,6 +219,11 @@ func close_level() -> void:
 # ------------------------------------------------------------------------------
 # Handler Methods
 # ------------------------------------------------------------------------------
+func _on_spider_stepped(pos : Vector2) -> void:
+	var dist : float = pos.distance_to(_player.global_position)
+	var amplitude : float = min(2.0, max(16.0, (1000 - dist) / 20.0))
+	_camera.shake(amplitude, 12.0, 2.0)
+
 func _on_Spider_player_eaten():
 	print("Player has been eaten!")
 	if not _message.is_connected("message_hidden", self, "_on_message_hidden"):

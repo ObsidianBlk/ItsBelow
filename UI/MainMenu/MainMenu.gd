@@ -14,7 +14,7 @@ signal request(req_name, msg)
 # ------------------------------------------------------------------------------
 onready var vp : Viewport = $Viewport
 onready var texrec : TextureRect = $TextureRect
-onready var start_btn : Button = $Menu/Options/Start
+onready var start_btn : Button = $Menu/Center/Options/Start
 
 # ------------------------------------------------------------------------------
 # Override Methods
@@ -54,3 +54,9 @@ func _on_Quit_pressed():
 	emit_signal("request", "quit")
 
 
+func _on_Jamoween_pressed():
+	OS.shell_open("https://itch.io/jam/jamoween3")
+
+
+func _on_Obsidian_pressed():
+	OS.shell_open("https://obsidianblk.itch.io/")

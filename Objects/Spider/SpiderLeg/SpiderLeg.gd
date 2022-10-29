@@ -7,6 +7,11 @@ extends Position2D
 # Adapted by: Bryan Miller
 
 # ------------------------------------------------------------------------------
+# Signals
+# ------------------------------------------------------------------------------
+signal step_completed(pos)
+
+# ------------------------------------------------------------------------------
 # Constants
 # ------------------------------------------------------------------------------
 const MIN_DIST = 100
@@ -30,6 +35,7 @@ var goal_pos : Vector2 = Vector2.ZERO
 var int_pos : Vector2 = Vector2.ZERO
 var start_pos: Vector2 = Vector2.ZERO
 var step_time_elapsed : float = 0.0
+var step_done : bool = true
 
 # ------------------------------------------------------------------------------
 # Onready Variables
@@ -55,6 +61,9 @@ func _process(delta : float) -> void:
 	elif t <= 1.0:
 		target_pos = int_pos.linear_interpolate(goal_pos, (t - 0.5) / 0.5)
 	else:
+		if not step_done:
+			step_done = true
+			emit_signal("step_completed", goal_pos)
 		target_pos = goal_pos
 	_UpdateIK(target_pos)
 
@@ -121,4 +130,6 @@ func step_to(pos : Vector2, instant : bool = false) -> void:
 	
 	if instant:
 		_UpdateIK(goal_pos)
+	else:
+		step_done = false
 

@@ -124,4 +124,4 @@ func _on_request(req_name : String, msg : Dictionary = {}) -> void:
 				ui.show_menu("MainMenu") # Return to default menu
 
 func _on_height_changed(meters : float) -> void:
-	print("Player Max Height: ", meters)
+	pass
